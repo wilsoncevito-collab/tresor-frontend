@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trésor · Mon Espace Santé</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --vert:#1a3a2a;--vert-m:#2d5a3d;--vert-c:#4a8c5c;--vert-p:#e8f2ec;
+  --or:#c9a84c;--or-c:#e8c97a;--creme:#f5f0e8;--blanc:#fdfaf4;
+  --texte:#1a2818;--doux:#4a5e44;--border:rgba(26,58,42,.1);
+  --rouge:#e74c3c;--bleu:#3498db;--bg:#f0f4f1;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texte);display:flex;min-height:100vh;}
+
+/* ── SIDENAV ── */
+.sidenav{width:250px;min-height:100vh;background:var(--vert);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;border-right:1px solid rgba(201,168,76,.1);}
+.sn-logo{padding:1.8rem 1.5rem 1.3rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--or-c);letter-spacing:.04em;text-decoration:none;}
+.logo span{color:rgba(255,255,255,.6);font-weight:300;}
+.logo-sub{font-size:.62rem;color:rgba(255,255,255,.25);letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;}
+
+/* User card */
+.sn-user{padding:1.1rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:.8rem;}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--vert-c),var(--or));display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#fff;font-weight:700;flex-shrink:0;}
+.sn-user-name{font-size:.84rem;font-weight:500;color:#fff;}
+.sn-user-prog{font-size:.65rem;color:rgba(255,255,255,.35);margin-top:.1rem;}
+.prog-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:.4rem;}
+.prog-bar-fill{height:100%;background:var(--or-c);border-radius:2px;transition:width 1s ease;}
+
+/* Nav items */
+.sn-nav{padding:.7rem 1rem;flex:1;}
+.nav-label{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.2);font-weight:600;padding:.4rem .7rem;margin-bottom:.1rem;}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.6rem .7rem;border-radius:.65rem;color:rgba(255,255,255,.5);font-size:.82rem;cursor:pointer;transition:all .22s;text-decoration:none;margin-bottom:.05rem;border:none;background:transparent;width:100%;font-family:'DM Sans',sans-serif;}
+.nav-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85);}
+.nav-item.active{background:rgba(201,168,76,.14);color:var(--or-c);font-weight:500;}
+.nav-ico{font-size:1rem;width:20px;text-align:center;opacity:.7;}
+.nav-item.active .nav-ico{opacity:1;}
+.nav-badge{margin-left:auto;background:var(--rouge);color:#fff;font-size:.56rem;font-weight:700;padding:.12rem .42rem;border-radius:2rem;}
+.sn-footer{padding:1.1rem 1.5rem;border-top:1px solid rgba(255,255,255,.05);}
+.btn-deco{display:flex;align-items:center;gap:.6rem;color:rgba(255,255,255,.3);font-size:.76rem;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .3s;}
+.btn-deco:hover{color:#e74c3c;}
+
+/* ── MAIN ── */
+.main{margin-left:250px;flex:1;display:flex;flex-direction:column;}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:.9rem 2.2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.topbar-left h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--vert);}
+.topbar-left p{font-size:.72rem;color:var(--doux);font-weight:300;margin-top:.1rem;}
+.topbar-right{display:flex;gap:.7rem;align-items:center;}
+.tb-btn{padding:.45rem 1.1rem;border-radius:2rem;font-size:.76rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;border:none;transition:all .3s;}
+.tb-ghost{background:var(--vert-p);color:var(--vert);}
+.tb-gold{background:var(--or);color:var(--vert);}
+.tb-gold:hover{background:var(--or-c);}
+.notif{width:34px;height:34px;border-radius:50%;background:var(--vert-p);border:none;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;position:relative;}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--rouge);border:1.5px solid #fff;}
+
+.body-inner{padding:2rem 2.2rem;display:flex;flex-direction:column;gap:1.8rem;}
+
+/* Loading screen */
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:1rem;}
+.spinner{width:40px;height:40px;border:3px solid var(--vert-p);border-top-color:var(--vert);border-radius:50%;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-screen p{font-size:.85rem;color:var(--doux);font-weight:300;}
+
+/* Alert banner */
+.alert-banner{background:linear-gradient(135deg,var(--vert),var(--vert-m));border-radius:1.1rem;padding:1.3rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;}
+.ab-left{display:flex;align-items:center;gap:.9rem;}
+.ab-ico{font-size:1.4rem;}
+.ab-title{font-size:.9rem;font-weight:600;color:#fff;}
+.ab-sub{font-size:.74rem;color:rgba(255,255,255,.55);font-weight:300;margin-top:.1rem;}
+.ab-close{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.5);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.9rem;flex-shrink:0;transition:all .2s;}
+.ab-close:hover{background:rgba(255,255,255,.2);color:#fff;}
+
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;}
+.kpi{background:#fff;border-radius:1.1rem;padding:1.3rem 1.4rem;border:1px solid var(--border);position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+.kpi:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(26,58,42,.08);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi.glyc::before{background:linear-gradient(90deg,#e74c3c,#f39c12);}
+.kpi.poid::before{background:linear-gradient(90deg,var(--vert-c),var(--or));}
+.kpi.tens::before{background:linear-gradient(90deg,#3498db,#9b59b6);}
+.kpi.prog::before{background:linear-gradient(90deg,var(--or),var(--or-c));}
+.kpi-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;}
+.kpi-label{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--doux);font-weight:600;}
+.kpi-icon{font-size:1.1rem;}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--vert);line-height:1;}
+.kpi-unit{font-size:.76rem;color:var(--doux);font-weight:300;font-family:'DM Sans',sans-serif;}
+.kpi-delta{display:inline-flex;align-items:center;gap:.25rem;font-size:.68rem;font-weight:500;margin-top:.45rem;padding:.18rem .55rem;border-radius:2rem;}
+.delta-g{background:#e8f8ed;color:#27ae60;}
+.delta-w{background:#fef5eb;color:#e67e22;}
+.delta-b{background:#eaf3fb;color:#3498db;}
+.kpi-sub{font-size:.66rem;color:var(--doux);font-weight:300;margin-top:.2rem;}
+
+/* Objectifs */
+.obj-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.obj-card{background:#fff;border-radius:1.1rem;padding:1.4rem;border:1px solid var(--border);}
+.obj-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;}
+.obj-title{font-size:.78rem;font-weight:600;color:var(--vert);}
+.obj-pct{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--vert);}
+.obj-bar{height:7px;background:var(--vert-p);border-radius:4px;margin-bottom:.5rem;overflow:hidden;}
+.obj-fill{height:100%;border-radius:4px;transition:width 1.5s cubic-bezier(.4,0,.2,1);}
+.fill-g{background:linear-gradient(90deg,#e74c3c,#f39c12);}
+.fill-p{background:linear-gradient(90deg,var(--vert-c),var(--or));}
+.obj-labels{display:flex;justify-content:space-between;font-size:.64rem;color:var(--doux);font-weight:300;}
+
+/* Charts row */
+.charts-row{display:grid;grid-template-columns:1.2fr 1fr;gap:1.4rem;}
+.chart-card{background:#fff;border-radius:1.1rem;padding:1.5rem;border:1px solid var(--border);}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.3rem;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--vert);}
+.card-sub{font-size:.68rem;color:var(--doux);font-weight:300;margin-top:.1rem;}
+.period-btns{display:flex;gap:.3rem;}
+.pb{padding:.25rem .7rem;border-radius:2rem;font-size:.65rem;font-weight:500;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--doux);font-family:'DM Sans',sans-serif;transition:all .2s;}
+.pb.active{background:var(--vert);color:#fff;border-color:var(--vert);}
+.chart-wrap{position:relative;}
+.chart-svg{width:100%;overflow:visible;}
+.chart-tooltip{position:absolute;background:var(--vert);color:#fff;padding:.45rem .85rem;border-radius:.55rem;font-size:.68rem;pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap;z-index:10;}
+.axis-lbl{font-family:'DM Sans',sans-serif;font-size:9.5px;fill:var(--doux);}
+.grid-l{stroke:var(--border);stroke-width:1;}
+
+/* Donut */
+.donut-wrap{display:flex;align-items:center;gap:1.5rem;}
+.legend{display:flex;flex-direction:column;gap:.7rem;flex:1;}
+.leg-item{display:flex;align-items:center;gap:.6rem;}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.leg-label{font-size:.75rem;color:var(--doux);font-weight:300;flex:1;}
+.leg-val{font-size:.78rem;font-weight:600;color:var(--vert);}
+
+/* Grille bas */
+.bottom-grid{display:grid;grid-template-columns:1.3fr 340px;gap:1.4rem;}
+
+/* Programme */
+.prog-card{background:#fff;border-radius:1.1rem;border:1px solid var(--border);overflow:hidden;}
+.prog-head{background:var(--vert);padding:1.3rem 1.6rem;display:flex;align-items:center;justify-content:space-between;}
+.prog-head h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:#fff;}
+.prog-head p{font-size:.66rem;color:rgba(255,255,255,.4);margin-top:.1rem;font-weight:300;}
+.week-tabs{display:flex;gap:.3rem;}
+.wt{padding:.28rem .75rem;border-radius:2rem;font-size:.65rem;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);background:transparent;font-family:'DM Sans',sans-serif;transition:all .22s;}
+.wt.active{background:var(--or);color:var(--vert);border-color:var(--or);}
+.prog-body{padding:1.3rem 1.5rem;}
+.day-row{display:flex;gap:.9rem;align-items:flex-start;padding:.75rem .9rem;border-radius:.75rem;border:1px solid var(--border);margin-bottom:.6rem;cursor:pointer;transition:all .25s;}
+.day-row:hover{border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.04);}
+.day-row.done{background:var(--vert-p);border-color:rgba(74,140,92,.2);}
+.day-row.today{background:linear-gradient(135deg,rgba(26,58,42,.03),rgba(201,168,76,.05));border-color:var(--or);}
+.day-chk{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;transition:all .22s;margin-top:.1rem;}
+.day-row.done .day-chk{background:var(--vert-c);border-color:var(--vert-c);color:#fff;}
+.day-row.today .day-chk{border-color:var(--or);}
+.day-name{font-size:.8rem;font-weight:600;color:var(--vert);margin-bottom:.25rem;}
+.today-badge{font-size:.6rem;color:var(--or);font-weight:500;margin-left:.4rem;}
+.meal-tags{display:flex;gap:.3rem;flex-wrap:wrap;}
+.mt{font-size:.62rem;padding:.15rem .55rem;border-radius:.35rem;font-weight:500;}
+.mt-matin{background:#fef5eb;color:#e67e22;}
+.mt-dejeuner{background:var(--vert-p);color:var(--vert-m);}
+.mt-diner{background:#eaf3fb;color:#2980b9;}
+.day-kcal{font-size:.64rem;color:var(--doux);margin-top:.25rem;font-weight:300;}
+
+/* Colonne droite */
+.right-col{display:flex;flex-direction:column;gap:1.2rem;}
+
+/* Formulaire mesure */
+.mesure-card{background:#fff;border-radius:1.1rem;padding:1.4rem;border:1px solid var(--border);}
+.mesure-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--vert);margin-bottom:1.1rem;}
+.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.7rem;}
+.fg{display:flex;flex-direction:column;gap:.3rem;}
+.fg label{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--doux);font-weight:600;}
+.fg .fu{position:relative;}
+.fg .fu input{padding-right:2.8rem;}
+.fg .fu::after{content:attr(data-u);position:absolute;right:.7rem;top:50%;transform:translateY(-50%);font-size:.66rem;color:var(--doux);pointer-events:none;}
+.fg input{padding:.6rem .8rem;border-radius:.6rem;border:1px solid var(--border);font-size:.84rem;color:var(--texte);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;background:var(--blanc);}
+.fg input:focus{border-color:var(--vert-c);}
+.btn-mesure{width:100%;padding:.7rem;border-radius:2rem;background:var(--vert);color:#fff;border:none;font-size:.8rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+.btn-mesure:hover{background:var(--vert-m);}
+.mesure-success{display:none;text-align:center;padding:.8rem;background:var(--vert-p);border-radius:.7rem;font-size:.78rem;color:var(--vert-c);font-weight:500;margin-top:.8rem;}
+.mesure-success.show{display:block;}
+
+/* Messages */
+.msg-card{background:#fff;border-radius:1.1rem;border:1px solid var(--border);overflow:hidden;}
+.msg-head{padding:1rem 1.3rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.msg-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--vert);}
+.msg-badge{background:var(--rouge);color:#fff;font-size:.58rem;font-weight:700;padding:.12rem .45rem;border-radius:2rem;}
+.msg-list{max-height:200px;overflow-y:auto;}
+.msg-item{display:flex;gap:.7rem;padding:.85rem 1.3rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;}
+.msg-item:hover{background:var(--blanc);}
+.msg-item.unread{background:rgba(74,140,92,.04);}
+.msg-av{width:32px;height:32px;border-radius:50%;background:var(--vert-c);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;font-weight:600;flex-shrink:0;}
+.msg-body{flex:1;min-width:0;}
+.msg-from{font-size:.76rem;font-weight:600;color:var(--vert);}
+.unread-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--vert-c);margin-left:.4rem;vertical-align:middle;}
+.msg-prev{font-size:.7rem;color:var(--doux);font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:.1rem;}
+.msg-time{font-size:.62rem;color:var(--doux);}
+.msg-input-row{padding:.85rem 1.3rem;display:flex;gap:.5rem;border-top:1px solid var(--border);}
+.msg-inp{flex:1;padding:.5rem .85rem;border-radius:2rem;border:1px solid var(--border);font-size:.78rem;font-family:'DM Sans',sans-serif;outline:none;background:var(--blanc);}
+.msg-inp:focus{border-color:var(--vert-c);}
+.msg-send{width:32px;height:32px;border-radius:50%;background:var(--vert);border:none;cursor:pointer;color:#fff;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .3s;flex-shrink:0;}
+.msg-send:hover{background:var(--vert-m);}
+
+/* Conseils */
+.conseils-card{background:linear-gradient(135deg,var(--vert),#0f2218);border-radius:1.1rem;padding:1.4rem;position:relative;overflow:hidden;}
+.conseils-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 80% 20%,rgba(201,168,76,.1) 0%,transparent 60%);}
+.c-head{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.c-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:300;color:#fff;}
+.c-badge{background:var(--or);color:var(--vert);font-size:.58rem;font-weight:700;padding:.18rem .55rem;border-radius:2rem;letter-spacing:.07em;}
+.conseil{position:relative;z-index:2;display:flex;gap:.7rem;align-items:flex-start;margin-bottom:.8rem;}
+.c-ico{font-size:1rem;flex-shrink:0;margin-top:.05rem;}
+.c-txt{font-size:.75rem;color:rgba(255,255,255,.6);font-weight:300;line-height:1.65;}
+.c-txt strong{color:var(--or-c);font-weight:500;}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--vert);color:#fff;padding:.7rem 1.6rem;border-radius:3rem;font-size:.78rem;font-weight:500;z-index:600;pointer-events:none;transition:transform .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 30px rgba(0,0,0,.25);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+@media(max-width:1100px){
+  .sidenav{width:220px;}.main{margin-left:220px;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .charts-row,.bottom-grid{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  .sidenav{display:none;}.main{margin-left:0;}
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+  .obj-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDENAV -->
+<aside class="sidenav">
+  <div class="sn-logo">
+    <a href="/" class="logo">Tré<span>sor</span></a>
+    <div class="logo-sub">Mon espace santé</div>
+  </div>
+  <div class="sn-user">
+    <div class="avatar" id="sideAvatar">?</div>
+    <div>
+      <div class="sn-user-name" id="sideNom">Chargement…</div>
+      <div class="sn-user-prog" id="sideProg">Programme</div>
+      <div class="prog-bar"><div class="prog-bar-fill" id="sideProgFill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <nav class="sn-nav">
+    <div class="nav-label">Principal</div>
+    <button class="nav-item active" onclick="showSection('dashboard',this)"><span class="nav-ico">📊</span>Tableau de bord</button>
+    <button class="nav-item" onclick="showSection('mesures',this)"><span class="nav-ico">📈</span>Mes mesures</button>
+    <button class="nav-item" onclick="showSection('programme',this)"><span class="nav-ico">🍽️</span>Mon programme</button>
+    <button class="nav-item" onclick="showSection('messages',this)"><span class="nav-ico">💬</span>Messages<span class="nav-badge" id="navBadge">2</span></button>
+    <div class="nav-label" style="margin-top:.8rem">Boutique</div>
+    <a class="nav-item" href="catalogue.html"><span class="nav-ico">🍲</span>Restauration</a>
+    <a class="nav-item" href="boutique.html"><span class="nav-ico">🛒</span>Boutique Bio</a>
+  </nav>
+  <div class="sn-footer">
+    <button class="btn-deco" onclick="deconnecter()">🚪 <span>Se déconnecter</span></button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h2 id="topbarTitle">Tableau de Bord</h2>
+      <p id="topbarSub">Chargement…</p>
+    </div>
+    <div class="topbar-right">
+      <button class="tb-btn tb-ghost" onclick="showSection('mesures',null)">📊 Ajouter mesure</button>
+      <button class="tb-btn tb-gold" onclick="document.getElementById('mesureCard').scrollIntoView({behavior:'smooth'})">+ Mesure rapide</button>
+      <button class="notif">🔔<span class="notif-dot"></span></button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="spinner"></div>
+    <p>Chargement de votre espace santé…</p>
+  </div>
+
+  <!-- CONTENU DASHBOARD -->
+  <div class="body-inner" id="dashContent" style="display:none">
+
+    <!-- ALERTE -->
+    <div class="alert-banner" id="alertBanner">
+      <div class="ab-left">
+        <span class="ab-ico">🎯</span>
+        <div>
+          <div class="ab-title" id="alertTitle">Bienvenue sur Trésor !</div>
+          <div class="ab-sub" id="alertSub">Enregistrez votre première mesure pour démarrer le suivi.</div>
+        </div>
+      </div>
+      <button class="ab-close" onclick="document.getElementById('alertBanner').style.display='none'">✕</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi glyc">
+        <div class="kpi-head"><span class="kpi-label">Glycémie</span><span class="kpi-icon">🩸</span></div>
+        <div><span class="kpi-val" id="kpiGlyc">—</span><span class="kpi-unit"> g/L</span></div>
+        <div class="kpi-delta delta-g" id="kpiGlycDelta">En attente de mesure</div>
+        <div class="kpi-sub" id="kpiGlycSub">Objectif : — g/L</div>
+      </div>
+      <div class="kpi poid">
+        <div class="kpi-head"><span class="kpi-label">Poids</span><span class="kpi-icon">⚖️</span></div>
+        <div><span class="kpi-val" id="kpiPoids">—</span><span class="kpi-unit"> kg</span></div>
+        <div class="kpi-delta delta-g" id="kpiPoidsDelta">En attente de mesure</div>
+        <div class="kpi-sub" id="kpiPoidsSub">Objectif : — kg</div>
+      </div>
+      <div class="kpi tens">
+        <div class="kpi-head"><span class="kpi-label">Tension</span><span class="kpi-icon">❤️</span></div>
+        <div><span class="kpi-val" id="kpiTens">—</span><span class="kpi-unit">/—</span></div>
+        <div class="kpi-delta delta-b">En attente</div>
+        <div class="kpi-sub">Objectif : 120/80</div>
+      </div>
+      <div class="kpi prog">
+        <div class="kpi-head"><span class="kpi-label">Avancement</span><span class="kpi-icon">📅</span></div>
+        <div><span class="kpi-val" id="kpiSem">1</span><span class="kpi-unit" id="kpiSemTotal">/12</span></div>
+        <div class="kpi-delta delta-g" id="kpiProgPct">0% accompli</div>
+        <div class="kpi-sub" id="kpiProgSub">Programme en cours</div>
+      </div>
+    </div>
+
+    <!-- OBJECTIFS -->
+    <div class="obj-row">
+      <div class="obj-card">
+        <div class="obj-head"><span class="obj-title">🩸 Objectif Glycémie</span><span class="obj-pct" id="objGlycPct">—%</span></div>
+        <div class="obj-bar"><div class="obj-fill fill-g" id="objGlycBar" style="width:0%"></div></div>
+        <div class="obj-labels"><span id="objGlycDepart">Départ : —</span><span id="objGlycActuel">Actuel : —</span><span id="objGlycCible">Cible : —</span></div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-head"><span class="obj-title">⚖️ Objectif Poids</span><span class="obj-pct" id="objPoidsPct">—%</span></div>
+        <div class="obj-bar"><div class="obj-fill fill-p" id="objPoidsBar" style="width:0%"></div></div>
+        <div class="obj-labels"><span id="objPoidsDepart">Départ : —</span><span id="objPoidsActuel">Actuel : —</span><span id="objPoidsCible">Cible : —</span></div>
+      </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="card-head">
+          <div><div class="card-title">Évolution glycémie</div><div class="card-sub">Mesures hebdomadaires (g/L)</div></div>
+          <div class="period-btns"><button class="pb active">8 sem.</button><button class="pb">3 mois</button></div>
+        </div>
+        <div class="chart-wrap">
+          <div class="chart-tooltip" id="chartTooltip"></div>
+          <svg class="chart-svg" viewBox="0 0 480 180" id="glycChart">
+            <line class="grid-l" x1="40" y1="15" x2="470" y2="15"/>
+            <line class="grid-l" x1="40" y1="55" x2="470" y2="55"/>
+            <line class="grid-l" x1="40" y1="95" x2="470" y2="95"/>
+            <line class="grid-l" x1="40" y1="135" x2="470" y2="135"/>
+            <line class="grid-l" x1="40" y1="165" x2="470" y2="165"/>
+            <text class="axis-lbl" x="32" y="19" text-anchor="end">1.5</text>
+            <text class="axis-lbl" x="32" y="59" text-anchor="end">1.3</text>
+            <text class="axis-lbl" x="32" y="99" text-anchor="end">1.1</text>
+            <text class="axis-lbl" x="32" y="139" text-anchor="end">0.9</text>
+            <text class="axis-lbl" x="32" y="169" text-anchor="end">0.8</text>
+            <line x1="40" y1="165" x2="470" y2="165" stroke="#27ae60" stroke-dasharray="5 4" stroke-width="1.5"/>
+            <path id="chartArea" fill="#e74c3c" opacity=".08"/>
+            <polyline id="chartLine" fill="none" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <g id="chartDots"></g>
+            <text class="axis-lbl" x="50" y="178">S1</text>
+            <text class="axis-lbl" x="112" y="178">S2</text>
+            <text class="axis-lbl" x="174" y="178">S3</text>
+            <text class="axis-lbl" x="236" y="178">S4</text>
+            <text class="axis-lbl" x="298" y="178">S5</text>
+            <text class="axis-lbl" x="360" y="178">S6</text>
+            <text class="axis-lbl" x="422" y="178">S7</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="card-head">
+          <div><div class="card-title">Progrès global</div><div class="card-sub">Résumé de votre transformation</div></div>
+        </div>
+        <div class="donut-wrap">
+          <svg viewBox="0 0 120 120" width="120" height="120" style="flex-shrink:0">
+            <circle cx="60" cy="60" r="46" fill="none" stroke="var(--vert-p)" stroke-width="11"/>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="var(--vert-c)" stroke-width="11" stroke-linecap="round"
+              id="donutCircle" stroke-dasharray="0 289" stroke-dashoffset="72" transform="rotate(-90 60 60)"/>
+            <text font-family="Cormorant Garamond,serif" font-size="20" font-weight="600" fill="var(--vert)" x="60" y="55" text-anchor="middle" id="donutPct">0%</text>
+            <text font-size="8.5" fill="var(--doux)" font-family="DM Sans,sans-serif" x="60" y="67" text-anchor="middle">programme</text>
+          </svg>
+          <div class="legend" id="legendContent">
+            <div class="leg-item"><span class="leg-dot" style="background:var(--vert-c)"></span><span class="leg-label">Poids perdu</span><span class="leg-val" id="legPoids">— kg</span></div>
+            <div class="leg-item"><span class="leg-dot" style="background:#e74c3c"></span><span class="leg-label">Glycémie réduite</span><span class="leg-val" id="legGlyc">— g/L</span></div>
+            <div class="leg-item"><span class="leg-dot" style="background:var(--or)"></span><span class="leg-label">Semaines</span><span class="leg-val" id="legSem">—/—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRAMME + DROITE -->
+    <div class="bottom-grid">
+      <div class="prog-card">
+        <div class="prog-head">
+          <div><h3>Programme Alimentaire</h3><p id="progSubtitle">Semaine en cours</p></div>
+          <div class="week-tabs">
+            <button class="wt" onclick="chargerSemaine(-1,this)">← Préc.</button>
+            <button class="wt active" id="wtActuelle">S1</button>
+            <button class="wt" onclick="chargerSemaine(1,this)">Suiv. →</button>
+          </div>
+        </div>
+        <div class="prog-body" id="progBody">
+          <p style="font-size:.82rem;color:var(--doux);font-weight:300;padding:1rem 0;">Chargement du programme…</p>
+        </div>
+      </div>
+
+      <div class="right-col">
+        <!-- MESURE RAPIDE -->
+        <div class="mesure-card" id="mesureCard">
+          <div class="mesure-title">📝 Enregistrer une mesure</div>
+          <div class="form-row2">
+            <div class="fg"><label>Date</label><input type="date" id="mDate"/></div>
+            <div class="fg"><label>Heure</label><input type="time" id="mHeure"/></div>
+          </div>
+          <div class="form-row2">
+            <div class="fg"><label>Glycémie</label><div class="fu" data-u="g/L"><input type="number" step=".01" placeholder="1.05" id="mGlyc"/></div></div>
+            <div class="fg"><label>Poids</label><div class="fu" data-u="kg"><input type="number" step=".1" placeholder="88.0" id="mPoids"/></div></div>
+          </div>
+          <div class="form-row2">
+            <div class="fg"><label>Tension sys.</label><div class="fu" data-u="mmHg"><input type="number" placeholder="130" id="mTensSys"/></div></div>
+            <div class="fg"><label>Tension dia.</label><div class="fu" data-u="mmHg"><input type="number" placeholder="85" id="mTensDia"/></div></div>
+          </div>
+          <button class="btn-mesure" onclick="enregistrerMesure()">✓ Enregistrer</button>
+          <div class="mesure-success" id="mesureSuccess">✓ Mesure enregistrée avec succès !</div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="msg-card">
+          <div class="msg-head"><span class="msg-title">💬 Messages</span><span class="msg-badge" id="msgBadge">2</span></div>
+          <div class="msg-list" id="msgList">
+            <div class="msg-item unread">
+              <div class="msg-av">NS</div>
+              <div class="msg-body"><div class="msg-from">Coach Trésor<span class="unread-dot"></span></div><div class="msg-prev">Bienvenue ! Votre programme est activé...</div></div>
+              <span class="msg-time">Maintenant</span>
+            </div>
+          </div>
+          <div class="msg-input-row">
+            <input class="msg-inp" type="text" id="msgInput" placeholder="Écrire un message…"/>
+            <button class="msg-send" onclick="envoyerMessage()">→</button>
+          </div>
+        </div>
+
+        <!-- CONSEILS -->
+        <div class="conseils-card">
+          <div class="c-head"><span class="c-title">Conseils de la semaine</span><span class="c-badge" id="conseilBadge">Sem. 1</span></div>
+          <div class="conseil"><span class="c-ico">💧</span><span class="c-txt"><strong>Hydratation :</strong> Buvez 2L d'eau par jour. Ajoutez du gingembre frais pour booster votre métabolisme.</span></div>
+          <div class="conseil"><span class="c-ico">🕐</span><span class="c-txt"><strong>Timing repas :</strong> Mangez dans les 30 min après votre réveil pour stabiliser la glycémie matinale.</span></div>
+          <div class="conseil"><span class="c-ico">🚶</span><span class="c-txt"><strong>Activité :</strong> 20 min de marche après le déjeuner réduit le pic glycémique de <strong>15 à 20%</strong>.</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /dashContent -->
+</div><!-- /main -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = 'https://tresor-backend-production.up.railway.app/api';
+
+// ── AUTH ──
+function getToken() { return localStorage.getItem('tresor_token'); }
+function getPatient() {
+  const p = localStorage.getItem('tresor_patient');
+  return p ? JSON.parse(p) : null;
+}
+function deconnecter() {
+  localStorage.removeItem('tresor_token');
+  localStorage.removeItem('tresor_patient');
+  window.location.href = 'connexion.html';
+}
+
+// Rediriger si non connecté
+if (!getToken()) window.location.href = 'connexion.html';
+
+// ── APPEL API SÉCURISÉ ──
+async function apiGet(endpoint) {
+  const resp = await fetch(`${API_URL}${endpoint}`, {
+    headers: { Authorization: `Bearer ${getToken()}` }
+  });
+  if (resp.status === 401 || resp.status === 403) {
+    deconnecter(); return null;
+  }
+  return resp.json();
+}
+async function apiPost(endpoint, body) {
+  const resp = await fetch(`${API_URL}${endpoint}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (resp.status === 401 || resp.status === 403) { deconnecter(); return null; }
+  return resp.json();
+}
+
+// ── INITIALISATION ──
+let patientData = null;
+let mesuresData = [];
+let semaineCourante = 1;
+
+async function init() {
+  try {
+    // Données en parallèle
+    const [profil, mesures, courbe] = await Promise.all([
+      apiGet('/auth/moi'),
+      apiGet('/mesures?periode=3mois'),
+      apiGet('/mesures/courbe?nb=7')
+    ]);
+
+    if (!profil?.success) { deconnecter(); return; }
+
+    patientData = profil.patient;
+    mesuresData = mesures?.mesures || [];
+    semaineCourante = patientData.semaine_actuelle || 1;
+
+    // Masquer loading, afficher contenu
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('dashContent').style.display = 'flex';
+
+    // Remplir l'interface
+    remplirSidenav();
+    remplirTopbar();
+    remplirKPIs(mesures?.stats);
+    remplirObjectifs();
+    remplirChart(courbe?.courbe || []);
+    remplirDonut();
+    remplirProgramme();
+    initMesureForm();
+
+  } catch (err) {
+    console.error('Erreur init:', err);
+    document.getElementById('loadingScreen').innerHTML =
+      '<p style="color:#e74c3c">Erreur de chargement. <a href="connexion.html">Reconnectez-vous</a></p>';
+  }
+}
+
+// ── SIDENAV ──
+function remplirSidenav() {
+  const p = patientData;
+  const initiales = (p.prenom?.[0] || '') + (p.nom?.[0] || '');
+  document.getElementById('sideAvatar').textContent = initiales.toUpperCase();
+  document.getElementById('sideNom').textContent = `${p.prenom} ${p.nom}`;
+  const durees = { '3mois': 12, '5mois': 20, 'famille': 20 };
+  const total = durees[p.programme] || 12;
+  const pct = Math.round((semaineCourante / total) * 100);
+  document.getElementById('sideProg').textContent = `Programme ${p.programme} · Sem. ${semaineCourante}`;
+  document.getElementById('sideProgFill').style.width = pct + '%';
+}
+
+// ── TOPBAR ──
+function remplirTopbar() {
+  const p = patientData;
+  const jours = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const mois = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  const now = new Date();
+  document.getElementById('topbarTitle').textContent = `Bonjour ${p.prenom} 👋`;
+  document.getElementById('topbarSub').textContent = `${jours[now.getDay()]} ${now.getDate()} ${mois[now.getMonth()]} · Semaine ${semaineCourante}`;
+  // Date/heure mesure
+  const dateInput = document.getElementById('mDate');
+  const heureInput = document.getElementById('mHeure');
+  if (dateInput) dateInput.value = now.toISOString().split('T')[0];
+  if (heureInput) heureInput.value = now.toTimeString().slice(0,5);
+  document.getElementById('conseilBadge').textContent = `Sem. ${semaineCourante}`;
+  document.getElementById('wtActuelle').textContent = `S${semaineCourante}`;
+}
+
+// ── KPIs ──
+function remplirKPIs(stats) {
+  const p = patientData;
+  if (stats) {
+    if (stats.glycemie_derniere) {
+      document.getElementById('kpiGlyc').textContent = stats.glycemie_derniere;
+      const delta = stats.evolution_glycemie;
+      if (delta) {
+        const d = parseFloat(delta);
+        document.getElementById('kpiGlycDelta').textContent = (d < 0 ? '↓ ' : '↑ +') + Math.abs(d) + ' g/L depuis le début';
+        document.getElementById('kpiGlycDelta').className = 'kpi-delta ' + (d < 0 ? 'delta-g' : 'delta-w');
+      }
+    }
+    if (stats.poids_dernier) {
+      document.getElementById('kpiPoids').textContent = stats.poids_dernier;
+      const delta = stats.evolution_poids;
+      if (delta) {
+        const d = parseFloat(delta);
+        document.getElementById('kpiPoidsDelta').textContent = (d < 0 ? '↓ −' : '↑ +') + Math.abs(d) + ' kg depuis le début';
+        document.getElementById('kpiPoidsDelta').className = 'kpi-delta ' + (d < 0 ? 'delta-g' : 'delta-w');
+      }
+    }
+  }
+  if (p.objectif_glycemie) document.getElementById('kpiGlycSub').textContent = `Objectif : ${p.objectif_glycemie} g/L`;
+  if (p.objectif_poids) document.getElementById('kpiPoidsSub').textContent = `Objectif : ${p.objectif_poids} kg`;
+  const durees = { '3mois': 12, '5mois': 20, 'famille': 20 };
+  const total = durees[p.programme] || 12;
+  document.getElementById('kpiSem').textContent = semaineCourante;
+  document.getElementById('kpiSemTotal').textContent = `/${total}`;
+  const pct = Math.round((semaineCourante / total) * 100);
+  document.getElementById('kpiProgPct').textContent = `${pct}% accompli`;
+  document.getElementById('kpiProgSub').textContent = `${total - semaineCourante} semaines restantes`;
+  // Alerte banner
+  if (stats?.glycemie_derniere) {
+    document.getElementById('alertTitle').textContent = `Bon suivi ${patientData.prenom} !`;
+    document.getElementById('alertSub').textContent = `Glycémie actuelle : ${stats.glycemie_derniere} g/L. Continuez votre programme.`;
+  }
+}
+
+// ── OBJECTIFS ──
+function remplirObjectifs() {
+  const p = patientData;
+  const stats = mesuresData.length > 0 ? {} : null;
+  // Glycémie
+  if (p.glycemie_depart && p.objectif_glycemie) {
+    const dernMesure = mesuresData.find(m => m.glycemie);
+    const actuel = dernMesure ? parseFloat(dernMesure.glycemie) : parseFloat(p.glycemie_depart);
+    const depart = parseFloat(p.glycemie_depart);
+    const cible = parseFloat(p.objectif_glycemie);
+    const pct = Math.min(100, Math.round(((depart - actuel) / (depart - cible)) * 100));
+    document.getElementById('objGlycPct').textContent = Math.max(0, pct) + '%';
+    document.getElementById('objGlycBar').style.width = Math.max(0, pct) + '%';
+    document.getElementById('objGlycDepart').textContent = `Départ : ${depart} g/L`;
+    document.getElementById('objGlycActuel').textContent = `Actuel : ${actuel} g/L`;
+    document.getElementById('objGlycCible').textContent = `Cible : ${cible} g/L`;
+  }
+  // Poids
+  if (p.poids_depart && p.objectif_poids) {
+    const dernMesure = mesuresData.find(m => m.poids);
+    const actuel = dernMesure ? parseFloat(dernMesure.poids) : parseFloat(p.poids_depart);
+    const depart = parseFloat(p.poids_depart);
+    const cible = parseFloat(p.objectif_poids);
+    const pct = Math.min(100, Math.round(((depart - actuel) / (depart - cible)) * 100));
+    document.getElementById('objPoidsPct').textContent = Math.max(0, pct) + '%';
+    document.getElementById('objPoidsBar').style.width = Math.max(0, pct) + '%';
+    document.getElementById('objPoidsDepart').textContent = `Départ : ${depart} kg`;
+    document.getElementById('objPoidsActuel').textContent = `Actuel : ${actuel} kg`;
+    document.getElementById('objPoidsCible').textContent = `Cible : ${cible} kg`;
+  }
+}
+
+// ── CHART GLYCÉMIE ──
+function remplirChart(courbe) {
+  if (!courbe.length) return;
+  const xs = [50, 112, 174, 236, 298, 360, 422, 470];
+  const yMin = 0.7, yMax = 1.6, yRange = 165 - 15;
+  const toY = v => 15 + ((yMax - v) / (yMax - yMin)) * yRange;
+  const pts = courbe.slice(-8).map((d, i) => ({
+    x: xs[i], y: toY(parseFloat(d.glycemie_moy)),
+    val: d.glycemie_moy, sem: `Sem. ${i + 1}`
+  }));
+  if (!pts.length) return;
+  const polyPts = pts.map(p => `${p.x},${p.y}`).join(' ');
+  document.getElementById('chartLine').setAttribute('points', polyPts);
+  const last = pts[pts.length - 1];
+  document.getElementById('chartArea').setAttribute('d',
+    `M${pts[0].x},${pts[0].y} ${pts.map(p => `L${p.x},${p.y}`).join(' ')} L${last.x},165 L${pts[0].x},165 Z`
+  );
+  const dotsEl = document.getElementById('chartDots');
+  dotsEl.innerHTML = '';
+  pts.forEach(p => {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', p.x); circle.setAttribute('cy', p.y);
+    circle.setAttribute('r', '4'); circle.setAttribute('fill', '#e74c3c');
+    circle.style.cursor = 'pointer';
+    circle.addEventListener('mouseenter', e => {
+      const tt = document.getElementById('chartTooltip');
+      tt.textContent = `${p.sem} : ${p.val} g/L`;
+      tt.style.opacity = '1';
+      tt.style.left = (p.x - 20) + 'px';
+      tt.style.top = (p.y - 35) + 'px';
+    });
+    circle.addEventListener('mouseleave', () => {
+      document.getElementById('chartTooltip').style.opacity = '0';
+    });
+    dotsEl.appendChild(circle);
+  });
+}
+
+// ── DONUT ──
+function remplirDonut() {
+  const p = patientData;
+  const durees = { '3mois': 12, '5mois': 20, 'famille': 20 };
+  const total = durees[p.programme] || 12;
+  const pct = Math.min(1, semaineCourante / total);
+  const circumference = 2 * Math.PI * 46;
+  const circle = document.getElementById('donutCircle');
+  circle.setAttribute('stroke-dasharray', `${circumference * pct} ${circumference * (1 - pct)}`);
+  document.getElementById('donutPct').textContent = Math.round(pct * 100) + '%';
+  const dernMesure = mesuresData[0];
+  const poidsPerdu = dernMesure?.poids && p.poids_depart
+    ? (parseFloat(p.poids_depart) - parseFloat(dernMesure.poids)).toFixed(1) : '—';
+  const glycRed = dernMesure?.glycemie && p.glycemie_depart
+    ? (parseFloat(p.glycemie_depart) - parseFloat(dernMesure.glycemie)).toFixed(2) : '—';
+  document.getElementById('legPoids').textContent = poidsPerdu !== '—' ? `−${poidsPerdu} kg` : '— kg';
+  document.getElementById('legGlyc').textContent = glycRed !== '—' ? `−${glycRed} g/L` : '— g/L';
+  document.getElementById('legSem').textContent = `${semaineCourante}/${total}`;
+}
+
+// ── PROGRAMME ──
+const jours = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const programmes = {
+  matin: ['🥛 Yaourt grec + pain low IG','🥣 Bouillie de mil','🍞 Pain low IG + beurre cacahuète','🥛 Yaourt + flocons avoine','🍵 Smoothie moringa','🥜 Biscottes + beurre cacahuète','🍞 Pain low IG + yaourt'],
+  dejeuner: ['🍲 Kédjenou légumes','🥗 Salade + haricots rouges','🐔 Poulet grillé légumes','🥗 Soupe légumes locaux','🫘 Haricots rouges mijotés','🍛 Plakali légumes bio','🥩 Agneau herbes couscous'],
+  diner: ['🐟 Attiéké poisson vapeur','🌾 Riz complet sauce aubergine','🍵 Tisane moringa','🐠 Tilapia sauce tomate','🐔 Poulet grillé quinoa','🥬 Salade fraîche ivoirienne','🍫 Chocolat noir 85%'],
+  kcal: [1450, 1380, 1420, 1390, 1410, 1360, 1500],
+  ig: [32, 29, 27, 30, 31, 35, 34]
+};
+
+function remplirProgramme() {
+  const aujourdhuiIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
+  document.getElementById('progSubtitle').textContent = `Semaine ${semaineCourante} · Programme personnalisé`;
+  let html = '';
+  jours.forEach((j, i) => {
+    const isToday = i === aujourdhuiIdx;
+    html += `
+      <div class="day-row ${isToday ? 'today' : ''}" onclick="toggleDone(this)">
+        <div class="day-chk">${isToday ? '' : ''}</div>
+        <div style="flex:1">
+          <div class="day-name">${j}${isToday ? '<span class="today-badge">← Aujourd\'hui</span>' : ''}</div>
+          <div class="meal-tags">
+            <span class="mt mt-matin">${programmes.matin[i]}</span>
+            <span class="mt mt-dejeuner">${programmes.dejeuner[i]}</span>
+            <span class="mt mt-diner">${programmes.diner[i]}</span>
+          </div>
+          <div class="day-kcal">~${programmes.kcal[i]} kcal · IG moyen : ${programmes.ig[i]}</div>
+        </div>
+      </div>`;
+  });
+  document.getElementById('progBody').innerHTML = html;
+}
+
+function toggleDone(row) {
+  const done = row.classList.toggle('done');
+  row.querySelector('.day-chk').textContent = done ? '✓' : '';
+  row.classList.remove('today');
+}
+
+function chargerSemaine(delta) {
+  const durees = { '3mois': 12, '5mois': 20, 'famille': 20 };
+  const total = durees[patientData?.programme] || 12;
+  const nouvelle = Math.max(1, Math.min(total, semaineCourante + delta));
+  if (nouvelle !== semaineCourante) {
+    semaineCourante = nouvelle;
+    document.getElementById('wtActuelle').textContent = `S${semaineCourante}`;
+    remplirProgramme();
+    afficherToast(`Programme semaine ${semaineCourante} chargé`);
+  }
+}
+
+// ── ENREGISTRER MESURE ──
+async function enregistrerMesure() {
+  const glycemie = document.getElementById('mGlyc').value;
+  const poids = document.getElementById('mPoids').value;
+  const tension_sys = document.getElementById('mTensSys').value;
+  const tension_dia = document.getElementById('mTensDia').value;
+
+  if (!glycemie && !poids && !tension_sys) {
+    afficherToast('Entrez au moins une valeur');
+    return;
+  }
+
+  const payload = {
+    glycemie: glycemie ? parseFloat(glycemie) : null,
+    poids: poids ? parseFloat(poids) : null,
+    tension_sys: tension_sys ? parseInt(tension_sys) : null,
+    tension_dia: tension_dia ? parseInt(tension_dia) : null,
+    date_mesure: document.getElementById('mDate').value,
+    heure_mesure: document.getElementById('mHeure').value
+  };
+
+  try {
+    const data = await apiPost('/mesures', payload);
+    if (data?.success) {
+      document.getElementById('mesureSuccess').classList.add('show');
+      afficherToast('✓ Mesure enregistrée !');
+      // Reset
+      ['mGlyc','mPoids','mTensSys','mTensDia'].forEach(id => document.getElementById(id).value = '');
+      // Mettre à jour les KPIs
+      if (glycemie) document.getElementById('kpiGlyc').textContent = parseFloat(glycemie).toFixed(2);
+      if (poids) document.getElementById('kpiPoids').textContent = parseFloat(poids).toFixed(1);
+      if (tension_sys) document.getElementById('kpiTens').textContent = tension_sys;
+      if (data.alerte) afficherToast('⚠️ ' + data.alerte, 5000);
+      setTimeout(() => document.getElementById('mesureSuccess').classList.remove('show'), 3000);
+    } else {
+      afficherToast('Erreur : ' + (data?.message || 'Réessayez'));
+    }
+  } catch (err) {
+    afficherToast('Erreur de connexion');
+  }
+}
+
+// ── ENVOYER MESSAGE ──
+async function envoyerMessage() {
+  const input = document.getElementById('msgInput');
+  const contenu = input.value.trim();
+  if (!contenu) return;
+  input.value = '';
+
+  // Afficher le message du patient
+  const list = document.getElementById('msgList');
+  list.innerHTML += `
+    <div class="msg-item" style="flex-direction:row-reverse;background:#f0f4f1">
+      <div class="msg-av" style="background:var(--or);color:var(--vert)">${patientData?.prenom?.[0] || 'M'}</div>
+      <div class="msg-body" style="text-align:right"><div class="msg-from">Moi</div><div class="msg-prev">${contenu}</div></div>
+    </div>`;
+  list.scrollTop = list.scrollHeight;
+
+  try {
+    const data = await apiPost('/messages', { contenu });
+    if (data?.reponse) {
+      list.innerHTML += `
+        <div class="msg-item unread">
+          <div class="msg-av">NS</div>
+          <div class="msg-body"><div class="msg-from">Coach Trésor</div><div class="msg-prev">${data.reponse}</div></div>
+          <span class="msg-time">maintenant</span>
+        </div>`;
+      list.scrollTop = list.scrollHeight;
+    }
+  } catch (err) {
+    list.innerHTML += `<div class="msg-item"><div class="msg-body"><div class="msg-prev" style="color:var(--rouge)">Erreur d'envoi. Réessayez.</div></div></div>`;
+  }
+}
+
+// Envoyer avec Enter
+document.getElementById('msgInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') envoyerMessage();
+});
+
+// ── NAV SECTIONS ──
+function showSection(section, btn) {
+  if (btn) {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  // Pour l'instant tout est sur une page
+  // Future évolution : afficher/masquer des sections
+  if (section === 'mesures') {
+    document.getElementById('mesureCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('mesureCard').style.boxShadow = '0 0 0 2px var(--or)';
+    setTimeout(() => document.getElementById('mesureCard').style.boxShadow = '', 2000);
+  }
+}
+
+// ── TOAST ──
+function afficherToast(msg, duree = 2500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duree);
+}
+
+function initMesureForm() {
+  const now = new Date();
+  document.getElementById('mDate').value = now.toISOString().split('T')[0];
+  document.getElementById('mHeure').value = now.toTimeString().slice(0, 5);
+}
+
+// ── LANCEMENT ──
+init();
+</script>
+</body>
+</html>

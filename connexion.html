@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trésor · Connexion</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+:root{--vert:#1a3a2a;--vert-m:#2d5a3d;--vert-c:#4a8c5c;--or:#c9a84c;--or-c:#e8c97a;--creme:#f5f0e8;--blanc:#fdfaf4;--texte:#1a2818;--doux:#4a5e44;--border:rgba(26,58,42,.12);--rouge:#e74c3c;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--vert);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;position:relative;overflow:hidden;}
+body::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 30%,rgba(201,168,76,.1) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(74,140,92,.15) 0%,transparent 60%);}
+body::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(201,168,76,.05) 1px,transparent 1px);background-size:28px 28px;}
+
+/* ── CARD ── */
+.card{background:var(--blanc);border-radius:1.8rem;width:100%;max-width:440px;padding:2.8rem;position:relative;z-index:2;box-shadow:0 40px 80px rgba(0,0,0,.25);}
+
+/* Logo */
+.card-logo{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--vert);letter-spacing:.04em;text-decoration:none;}
+.logo span{color:var(--doux);font-weight:300;}
+.back-link{font-size:.72rem;color:var(--doux);text-decoration:none;display:flex;align-items:center;gap:.3rem;transition:color .3s;}
+.back-link:hover{color:var(--vert);}
+
+/* Header */
+.card-header{margin-bottom:2rem;}
+.card-header h1{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--vert);margin-bottom:.3rem;}
+.card-header p{font-size:.82rem;color:var(--doux);font-weight:300;}
+
+/* Form */
+.form-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem;}
+label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--doux);font-weight:600;}
+.input-wrap{position:relative;}
+input[type=email],input[type=password]{width:100%;padding:.75rem 1rem;border-radius:.8rem;border:1.5px solid var(--border);font-size:.9rem;color:var(--texte);font-family:'DM Sans',sans-serif;background:var(--blanc);transition:border-color .25s,box-shadow .25s;outline:none;}
+input:focus{border-color:var(--vert-c);box-shadow:0 0 0 3px rgba(74,140,92,.1);}
+input.error{border-color:var(--rouge);}
+.toggle-mdp{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:.85rem;color:var(--doux);padding:.2rem;}
+
+/* Remember me */
+.form-options{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.remember{display:flex;align-items:center;gap:.5rem;cursor:pointer;}
+.remember input[type=checkbox]{accent-color:var(--vert);width:14px;height:14px;}
+.remember span{font-size:.76rem;color:var(--doux);font-weight:400;}
+.forgot-link{font-size:.76rem;color:var(--vert-c);text-decoration:none;}
+.forgot-link:hover{color:var(--vert);}
+
+/* Bouton */
+.btn-submit{width:100%;padding:.9rem;border-radius:3rem;background:var(--vert);color:#fff;border:none;font-size:.9rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:.6rem;}
+.btn-submit:hover{background:var(--vert-m);}
+.btn-submit:disabled{background:#aaa;cursor:not-allowed;}
+.btn-spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite;display:none;}
+.btn-submit.loading .btn-spinner{display:block;}
+.btn-submit.loading .btn-text{opacity:.6;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Séparateur */
+.separator{display:flex;align-items:center;gap:.8rem;margin:1.5rem 0;}
+.separator::before,.separator::after{content:'';flex:1;height:1px;background:var(--border);}
+.separator span{font-size:.72rem;color:var(--doux);}
+
+/* Inscription link */
+.inscription-link{text-align:center;font-size:.82rem;color:var(--doux);}
+.inscription-link a{color:var(--vert);font-weight:600;text-decoration:none;}
+.inscription-link a:hover{text-decoration:underline;}
+
+/* Alertes */
+.alert{padding:.9rem 1.1rem;border-radius:.7rem;font-size:.82rem;margin-bottom:1.2rem;display:none;}
+.alert.show{display:block;}
+.alert-error{background:#fef0f0;border:1px solid #f5c6c6;color:var(--rouge);}
+.alert-success{background:#f0faf4;border:1px solid #b8e6c8;color:#27ae60;}
+
+/* Indicateur force mdp */
+.mdp-force{height:3px;border-radius:2px;margin-top:.4rem;background:var(--creme);overflow:hidden;}
+.mdp-force-bar{height:100%;width:0;border-radius:2px;transition:width .3s,background .3s;}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-logo">
+    <a href="/" class="logo">Tré<span>sor</span></a>
+    <a href="/" class="back-link">← Accueil</a>
+  </div>
+
+  <div class="card-header">
+    <h1>Bon retour 👋</h1>
+    <p>Connectez-vous à votre espace santé Trésor.</p>
+  </div>
+
+  <!-- ALERTES -->
+  <div class="alert alert-error" id="alertError"></div>
+  <div class="alert alert-success" id="alertSuccess"></div>
+
+  <!-- FORMULAIRE -->
+  <div class="form-group">
+    <label>Adresse email</label>
+    <input type="email" id="email" placeholder="kouame@gmail.com" autocomplete="email"/>
+  </div>
+
+  <div class="form-group">
+    <label>Mot de passe</label>
+    <div class="input-wrap">
+      <input type="password" id="motdepasse" placeholder="Votre mot de passe" autocomplete="current-password"/>
+      <button class="toggle-mdp" onclick="toggleMdp()" type="button" title="Afficher/masquer">👁</button>
+    </div>
+  </div>
+
+  <div class="form-options">
+    <label class="remember">
+      <input type="checkbox" id="remember" checked/>
+      <span>Rester connecté</span>
+    </label>
+    <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+  </div>
+
+  <button class="btn-submit" id="btnSubmit" onclick="seConnecter()">
+    <span class="btn-text">Se connecter</span>
+    <span class="btn-spinner"></span>
+  </button>
+
+  <div class="separator"><span>ou</span></div>
+
+  <p class="inscription-link">Pas encore de compte ? <a href="inscription.html">S'inscrire gratuitement →</a></p>
+</div>
+
+<script>
+ const API_URL = 'https://tresor-backend-production.up.railway.app/api';
+
+  // Rediriger si déjà connecté
+  if (localStorage.getItem('tresor_token')) {
+    window.location.href = 'coaching.html';
+  }
+
+  // Afficher/masquer mot de passe
+  function toggleMdp() {
+    const input = document.getElementById('motdepasse');
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  // Connexion au Enter
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') seConnecter();
+  });
+
+  // ── CONNEXION ──
+  async function seConnecter() {
+    const email = document.getElementById('email').value.trim();
+    const motdepasse = document.getElementById('motdepasse').value;
+    const btn = document.getElementById('btnSubmit');
+
+    // Validation
+    if (!email || !motdepasse) {
+      afficherErreur('Veuillez remplir tous les champs.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      afficherErreur('Adresse email invalide.');
+      return;
+    }
+
+    // Loading
+    btn.classList.add('loading');
+    btn.disabled = true;
+    cacherAlertes();
+
+    try {
+      const resp = await fetch(`${API_URL}/auth/connexion`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, mot_de_passe: motdepasse })
+      });
+
+      const data = await resp.json();
+
+      if (data.success) {
+        // Sauvegarder
+        localStorage.setItem('tresor_token', data.token);
+        localStorage.setItem('tresor_patient', JSON.stringify(data.patient));
+
+        // Message succès
+        afficherSucces(`Bon retour ${data.patient.prenom} ! Redirection…`);
+
+        // Redirection vers dashboard
+        setTimeout(() => {
+          window.location.href = 'coaching.html';
+        }, 1200);
+
+      } else {
+        afficherErreur(data.message || 'Email ou mot de passe incorrect.');
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
+
+    } catch (err) {
+      afficherErreur('Erreur de connexion. Vérifiez votre internet.');
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+  }
+
+  function afficherErreur(msg) {
+    const el = document.getElementById('alertError');
+    el.textContent = '⚠️ ' + msg;
+    el.classList.add('show');
+    document.getElementById('alertSuccess').classList.remove('show');
+  }
+
+  function afficherSucces(msg) {
+    const el = document.getElementById('alertSuccess');
+    el.textContent = '✓ ' + msg;
+    el.classList.add('show');
+    document.getElementById('alertError').classList.remove('show');
+  }
+
+  function cacherAlertes() {
+    document.getElementById('alertError').classList.remove('show');
+    document.getElementById('alertSuccess').classList.remove('show');
+  }
+</script>
+</body>
+</html>

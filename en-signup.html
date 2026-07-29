@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up — Trésor Health</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f8fdf8; color: #1a2e1a; min-height: 100vh; }
+
+    header {
+      background: linear-gradient(135deg, #1a6b3a, #2d9e5f);
+      padding: 16px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { color: white; font-size: 1.4rem; font-weight: 700; text-decoration: none; }
+    .logo span { color: #a8f0c6; }
+    nav a { color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
+
+    .main {
+      min-height: calc(100vh - 70px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #f0faf4 0%, #e8f5e9 100%);
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+      overflow: hidden;
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .card-top {
+      background: linear-gradient(135deg, #1a6b3a, #2d9e5f);
+      padding: 40px 32px;
+      text-align: center;
+      color: white;
+    }
+    .card-top .icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .card-top h1 { font-size: 1.6rem; margin-bottom: 8px; }
+    .card-top p { opacity: 0.88; font-size: 0.95rem; line-height: 1.5; }
+
+    .card-body { padding: 36px 32px; }
+
+    /* Formulaire */
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 0.85rem;
+      font-weight: 600; color: #333; margin-bottom: 6px;
+    }
+    .form-group input, .form-group select {
+      width: 100%; padding: 12px 16px;
+      border: 2px solid #e0e0e0; border-radius: 10px;
+      font-size: 0.95rem; transition: border-color 0.2s;
+      background: white;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none; border-color: #2d9e5f;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .btn-submit {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #1a6b3a, #2d9e5f);
+      color: white; border: none; border-radius: 12px;
+      font-size: 1.05rem; font-weight: 700; cursor: pointer;
+      margin-top: 8px; transition: opacity 0.2s;
+    }
+    .btn-submit:hover { opacity: 0.9; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .login-link {
+      text-align: center; margin-top: 20px;
+      font-size: 0.88rem; color: #666;
+    }
+    .login-link a { color: #2d9e5f; font-weight: 600; text-decoration: none; }
+
+    .err { color: #e53935; font-size: 0.83rem; margin-top: 10px; text-align: center; }
+    .success-msg {
+      background: #e8f5e9; border-radius: 12px; padding: 20px;
+      text-align: center; color: #1a6b3a; display: none;
+    }
+    .success-msg .icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .success-msg h3 { margin-bottom: 8px; }
+    .success-msg p { font-size: 0.9rem; color: #555; }
+
+    /* Results strip */
+    .results-strip {
+      background: #1a2e1a; color: white;
+      padding: 14px 28px; text-align: center;
+      font-size: 0.88rem;
+    }
+    .results-strip strong { color: #a8f0c6; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/en-index.html" class="logo">Trésor<span>Health</span></a>
+  <nav>
+    <a href="/en-index.html">Home</a>
+    <a href="/en-login.html">Login</a>
+  </nav>
+</header>
+
+<div class="results-strip">
+  ✨ Our program: <strong>18kg lost</strong> · Blood sugar <strong>1.5 → 0.8 g/L</strong> in 2 months · Naturally
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="card-top">
+      <div class="icon">🌿</div>
+      <h1>Start Your Journey</h1>
+      <p>Create your free account and get your personalized health program in minutes.</p>
+    </div>
+
+    <div class="card-body">
+
+      <div id="formContainer">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" id="prenom" placeholder="e.g. John" />
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" id="nom" placeholder="e.g. Smith" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" id="email" placeholder="your@email.com" />
+        </div>
+
+        <div class="form-group">
+          <label>WhatsApp Number *</label>
+          <input type="tel" id="telephone" placeholder="+1 234 567 8900" />
+        </div>
+
+        <div class="form-group">
+          <label>Password *</label>
+          <input type="password" id="password" placeholder="Min. 6 characters" />
+        </div>
+
+        <div class="form-group">
+          <label>My Health Goal *</label>
+          <select id="pathologie">
+            <option value="">— Choose your goal —</option>
+            <option value="perte_de_poids">⚖️ Lose weight</option>
+            <option value="diabete">🩸 Manage diabetes</option>
+            <option value="hypertension">❤️ Control blood pressure</option>
+            <option value="cardiaque">🫀 Heart health</option>
+            <option value="alimentation">🥗 Eat healthier</option>
+            <option value="general">💪 General wellness</option>
+          </select>
+        </div>
+
+        <div class="err" id="errMsg"></div>
+
+        <button class="btn-submit" id="btnSubmit" onclick="inscrire()">
+          🌿 Create My Free Account
+        </button>
+
+        <div class="login-link">
+          Already have an account? <a href="/en-login.html">Login here</a>
+        </div>
+      </div>
+
+      <div class="success-msg" id="successMsg">
+        <div class="icon">🎉</div>
+        <h3>Welcome to Trésor Health!</h3>
+        <p>Your account has been created. César Coach will contact you on WhatsApp shortly to activate your personalized program.</p>
+        <br>
+        <a href="https://wa.me/2250170726277" style="color:#2d9e5f;font-weight:700;">
+          💬 Chat with César now →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const API = 'https://tresor-backend-production.up.railway.app';
+
+  async function inscrire() {
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom = document.getElementById('nom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telephone = document.getElementById('telephone').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const pathologie = document.getElementById('pathologie').value;
+    const err = document.getElementById('errMsg');
+
+    if (!prenom || !email || !password || !telephone || !pathologie) {
+      err.textContent = 'Please fill in all required fields.';
+      return;
+    }
+    if (password.length < 6) {
+      err.textContent = 'Password must be at least 6 characters.';
+      return;
+    }
+
+    err.textContent = '';
+    const btn = document.getElementById('btnSubmit');
+    btn.disabled = true;
+    btn.textContent = 'Creating account...';
+
+    try {
+      const resp = await fetch(`${API}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prenom, nom, email, telephone, password, pathologie, langue: 'en' })
+      });
+      const data = await resp.json();
+
+      if (data.success) {
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      } else {
+        err.textContent = data.message || 'An error occurred. Please try again.';
+        btn.disabled = false;
+        btn.textContent = '🌿 Create My Free Account';
+      }
+    } catch(e) {
+      err.textContent = 'Connection error. Please try again.';
+      btn.disabled = false;
+      btn.textContent = '🌿 Create My Free Account';
+    }
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') inscrire(); });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18332586077"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18332586077');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trésor Health — Coming Soon</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0d3d20 0%, #1a6b3a 50%, #2d9e5f 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Cercles décoratifs */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .c1 { width: 500px; height: 500px; top: -150px; right: -150px; }
+    .c2 { width: 300px; height: 300px; bottom: -80px; left: -80px; }
+    .c3 { width: 200px; height: 200px; bottom: 100px; right: 50px; }
+
+    /* Logo */
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 48px;
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: #a8f0c6; }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      background: rgba(168,240,198,0.2);
+      border: 1px solid rgba(168,240,198,0.4);
+      color: #a8f0c6;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    /* Titre */
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+    h1 span { color: #a8f0c6; }
+
+    /* Sous-titre */
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.85;
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* Résultats */
+    .results {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .result-item { text-align: center; }
+    .result-item .num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #a8f0c6;
+      display: block;
+    }
+    .result-item .desc {
+      font-size: 0.8rem;
+      opacity: 0.75;
+      margin-top: 4px;
+    }
+
+    /* Formulaire notify */
+    .notify-box {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 36px 40px;
+      max-width: 480px;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+    .notify-box h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .notify-box p {
+      font-size: 0.88rem;
+      opacity: 0.75;
+      margin-bottom: 24px;
+    }
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+    .notify-box input {
+      flex: 1;
+      padding: 13px 16px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .notify-box input::placeholder { color: rgba(255,255,255,0.5); }
+    .notify-box input:focus { background: rgba(255,255,255,0.2); }
+    .btn-notify {
+      padding: 13px 20px;
+      background: #a8f0c6;
+      color: #0d3d20;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .btn-notify:hover { opacity: 0.9; }
+    .success-msg {
+      display: none;
+      background: rgba(168,240,198,0.2);
+      border: 1px solid rgba(168,240,198,0.4);
+      color: #a8f0c6;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+
+    /* WhatsApp */
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 48px;
+      transition: opacity 0.2s;
+    }
+    .wa-btn:hover { opacity: 0.9; }
+
+    /* Features preview */
+    .features {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 700px;
+      margin-bottom: 48px;
+    }
+    .feature {
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    footer {
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 500px) {
+      .input-row { flex-direction: column; }
+      .notify-box { padding: 24px 20px; }
+      .results { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="circle c1"></div>
+<div class="circle c2"></div>
+<div class="circle c3"></div>
+
+<div class="logo">Trésor<span>Health</span></div>
+
+<div class="badge">🌿 Coming Soon</div>
+
+<h1>Lose Weight. Eat Healthy.<br><span>Live Better & Longer.</span></h1>
+
+<p class="subtitle">
+  A natural health coaching platform using local African foods.
+  We're putting the finishing touches — something amazing is on its way.
+</p>
+
+<!-- Résultats prouvés -->
+<div class="results">
+  <div class="result-item">
+    <span class="num">18 kg</span>
+    <div class="desc">Lost in 2 months</div>
+  </div>
+  <div class="result-item">
+    <span class="num">1.5 → 0.8</span>
+    <div class="desc">Blood sugar g/L normalized</div>
+  </div>
+  <div class="result-item">
+    <span class="num">100%</span>
+    <div class="desc">Natural. No medication</div>
+  </div>
+</div>
+
+<!-- Notify form -->
+<div class="notify-box">
+  <h2>🔔 Be the First to Know</h2>
+  <p>Leave your email and we'll notify you the moment we launch.</p>
+  <div class="input-row">
+    <input type="email" id="notifyEmail" placeholder="your@email.com" />
+    <button class="btn-notify" onclick="notifyMe()">Notify Me</button>
+  </div>
+  <div class="success-msg" id="successMsg">
+    ✅ You're on the list! We'll reach out as soon as we launch. 🌿
+  </div>
+</div>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/2250170726277?text=Hello%20C%C3%A9sar%2C%20I%27m%20interested%20in%20Tr%C3%A9sor%20Health%20coaching%20!" 
+   target="_blank" class="wa-btn">
+  💬 Chat with César on WhatsApp
+</a>
+
+<!-- Features preview -->
+<div class="features">
+  <div class="feature">🏋️ Weight Loss Program</div>
+  <div class="feature">🩸 Diabetes Management</div>
+  <div class="feature">❤️ Blood Pressure Control</div>
+  <div class="feature">🥗 Local Food Nutrition</div>
+  <div class="feature">📊 Personal Dashboard</div>
+  <div class="feature">💬 24/7 AI Coach</div>
+</div>
+
+<footer>© 2026 Trésor Santé — Abidjan, Côte d'Ivoire</footer>
+
+<script>
+  async function notifyMe() {
+    const email = document.getElementById('notifyEmail').value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    // Sauvegarder l'email via le backend Trésor
+    try {
+      await fetch('https://tresor-backend-production.up.railway.app/api/auth/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, langue: 'en', source: 'coming-soon' })
+      });
+    } catch(e) {
+      // Silencieux si backend ne supporte pas encore
+    }
+
+    document.getElementById('notifyEmail').value = '';
+    document.getElementById('successMsg').style.display = 'block';
+  }
+
+  // Enter pour soumettre
+  document.getElementById('notifyEmail').addEventListener('keydown', e => {
+    if (e.key === 'Enter') notifyMe();
+  });
+</script>
+
+</body>
+</html>

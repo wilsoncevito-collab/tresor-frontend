@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18332586077"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18332586077');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Trésor Santé</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f0; color: #1a2e1a; }
+
+    /* Login */
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a6b3a, #2d9e5f);
+    }
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      width: 360px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    .login-box h1 { color: #1a6b3a; margin-bottom: 8px; }
+    .login-box p { color: #888; margin-bottom: 28px; font-size: 0.9rem; }
+    .login-box input {
+      width: 100%; padding: 12px 16px;
+      border: 2px solid #e0e0e0; border-radius: 10px;
+      font-size: 1rem; margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+    .login-box input:focus { outline: none; border-color: #2d9e5f; }
+    .btn-login {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, #1a6b3a, #2d9e5f);
+      color: white; border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 700; cursor: pointer;
+    }
+    .err { color: #e53935; font-size: 0.85rem; margin-top: 10px; }
+
+    /* Dashboard */
+    .dashboard { display: none; }
+    header {
+      background: linear-gradient(135deg, #1a6b3a, #2d9e5f);
+      padding: 16px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      color: white;
+    }
+    .logo { font-size: 1.3rem; font-weight: 700; }
+    .logo span { color: #a8f0c6; }
+    .btn-logout {
+      background: rgba(255,255,255,0.2); color: white;
+      border: none; padding: 8px 18px; border-radius: 8px;
+      cursor: pointer; font-size: 0.9rem;
+    }
+
+    /* Navigation onglets */
+    .tabs {
+      display: flex; background: white;
+      border-bottom: 2px solid #e0e0e0;
+      overflow-x: auto;
+    }
+    .tab {
+      padding: 14px 24px; cursor: pointer;
+      font-weight: 600; color: #888;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap; transition: all 0.2s;
+    }
+    .tab.actif { color: #1a6b3a; border-bottom-color: #1a6b3a; }
+    .tab:hover { color: #2d9e5f; }
+
+    /* Contenu */
+    .content { padding: 28px; max-width: 1200px; margin: 0 auto; }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .stat-card {
+      background: white; border-radius: 14px; padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center;
+    }
+    .stat-card .chiffre { font-size: 2rem; font-weight: 700; color: #1a6b3a; }
+    .stat-card .label { font-size: 0.85rem; color: #888; margin-top: 4px; }
+
+    /* Tables */
+    .card {
+      background: white; border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      overflow: hidden; margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 18px 24px; border-bottom: 1px solid #f0f0f0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-header h2 { font-size: 1.1rem; color: #1a2e1a; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: #f8fdf8; padding: 12px 16px; text-align: left; font-size: 0.82rem; color: #888; font-weight: 600; }
+    td { padding: 12px 16px; border-bottom: 1px solid #f5f5f5; font-size: 0.9rem; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafffe; }
+
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 12px;
+      font-size: 0.75rem; font-weight: 600;
+    }
+    .badge.actif { background: #e8f5e9; color: #2d9e5f; }
+    .badge.en_attente { background: #fff3e0; color: #e65100; }
+    .badge.livre { background: #e3f2fd; color: #1565c0; }
+    .badge.annule { background: #ffebee; color: #c62828; }
+
+    /* Boutons */
+    .btn {
+      padding: 8px 16px; border-radius: 8px; border: none;
+      cursor: pointer; font-size: 0.85rem; font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-green { background: #2d9e5f; color: white; }
+    .btn-blue { background: #1565c0; color: white; }
+    .btn-red { background: #c62828; color: white; }
+    .btn-orange { background: #e65100; color: white; }
+
+    /* Cron manuel */
+    .cron-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .cron-card {
+      background: white; border-radius: 14px; padding: 24px; text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .cron-card .emoji { font-size: 2.5rem; margin-bottom: 12px; }
+    .cron-card h3 { font-size: 1rem; margin-bottom: 8px; }
+    .cron-card p { font-size: 0.82rem; color: #888; margin-bottom: 16px; }
+
+    .section { display: none; }
+    .section.actif { display: block; }
+
+    .loading { text-align: center; padding: 40px; color: #888; }
+    .empty { text-align: center; padding: 40px; color: #bbb; }
+
+    /* Alerte */
+    .alerte {
+      padding: 12px 18px; border-radius: 10px; margin-bottom: 16px;
+      font-size: 0.9rem; display: none;
+    }
+    .alerte.success { background: #e8f5e9; color: #1a6b3a; display: block; }
+    .alerte.error { background: #ffebee; color: #c62828; display: block; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <h1>🌿 Trésor Admin</h1>
+    <p>Accès réservé à l'équipe Trésor</p>
+    <input type="email" id="adminEmail" placeholder="Email admin" />
+    <input type="password" id="adminPassword" placeholder="Mot de passe" />
+    <button class="btn-login" onclick="login()">Se connecter</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <header>
+    <div class="logo">Trésor<span>Admin</span></div>
+    <button class="btn-logout" onclick="logout()">Déconnexion</button>
+  </header>
+
+  <div class="tabs">
+    <div class="tab actif" onclick="onglet('stats', this)">📊 Stats</div>
+    <div class="tab" onclick="onglet('patients', this)">👥 Patients</div>
+    <div class="tab" onclick="onglet('commandes', this)">🛒 Commandes</div>
+    <div class="tab" onclick="onglet('cron', this)">⏰ Messages Auto</div>
+    <div class="tab" onclick="onglet('validation', this)">✅ À valider <span id="badge-validation" style="background:#e53935;color:white;border-radius:10px;padding:1px 7px;font-size:11px;margin-left:4px;display:none;">0</span></div>
+  </div>
+
+  <div class="content">
+    <div id="alerte" class="alerte"></div>
+
+    <!-- STATS -->
+    <div class="section actif" id="sec-stats">
+      <div class="stats" id="stats-grid">
+        <div class="stat-card"><div class="chiffre" id="s-patients">—</div><div class="label">Patients inscrits</div></div>
+        <div class="stat-card"><div class="chiffre" id="s-actifs">—</div><div class="label">Patients actifs</div></div>
+        <div class="stat-card"><div class="chiffre" id="s-commandes">—</div><div class="label">Commandes total</div></div>
+        <div class="stat-card"><div class="chiffre" id="s-revenus">—</div><div class="label">Revenus FCFA</div></div>
+      </div>
+    </div>
+
+    <!-- PATIENTS -->
+    <div class="section" id="sec-patients">
+      <div class="card">
+        <div class="card-header">
+          <h2>👥 Liste des patients</h2>
+        </div>
+        <div id="patients-table"><div class="loading">Chargement...</div></div>
+      </div>
+    </div>
+
+    <!-- COMMANDES -->
+    <div class="section" id="sec-commandes">
+      <div class="card">
+        <div class="card-header">
+          <h2>🛒 Commandes</h2>
+        </div>
+        <div id="commandes-table"><div class="loading">Chargement...</div></div>
+      </div>
+    </div>
+
+    <!-- À VALIDER -->
+    <div class="section" id="sec-validation">
+      <div id="validation-container">
+        <div class="loading">Chargement des messages en attente...</div>
+      </div>
+    </div>
+
+    <!-- CRON MANUEL -->
+    <div class="section" id="sec-cron">
+      <div class="cron-grid">
+        <div class="cron-card">
+          <div class="emoji">🌅</div>
+          <h3>Message Matin</h3>
+          <p>Rappel glycémie à jeun pour tous les patients actifs</p>
+          <button class="btn btn-green" onclick="envoyerCron('matin')">Envoyer maintenant</button>
+        </div>
+        <div class="cron-card">
+          <div class="emoji">☀️</div>
+          <h3>Message Midi</h3>
+          <p>Suivi déjeuner pour tous les patients actifs</p>
+          <button class="btn btn-blue" onclick="envoyerCron('apres_dejeuner')">Envoyer maintenant</button>
+        </div>
+        <div class="cron-card">
+          <div class="emoji">🌙</div>
+          <h3>Message Soir</h3>
+          <p>Bilan de journée pour tous les patients actifs</p>
+          <button class="btn btn-orange" onclick="envoyerCron('soir')">Envoyer maintenant</button>
+        </div>
+        <div class="cron-card">
+          <div class="emoji">📋</div>
+          <h3>Programme Semaine</h3>
+          <p>Programme de la semaine pour tous les patients</p>
+          <button class="btn btn-green" onclick="envoyerCron('programme_semaine')">Envoyer maintenant</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const API = 'https://tresor-backend-production.up.railway.app';
+  let token = localStorage.getItem('tresor_admin_token');
+
+  // Vérifier si déjà connecté
+  if (token) afficherDashboard();
+
+  async function login() {
+    const email = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value.trim();
+    if (!email || !password) return;
+
+    try {
+      const resp = await fetch(`${API}/api/auth/connexion`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, mot_de_passe: password })
+      });
+      const data = await resp.json();
+      if (data.success && data.token) {
+        token = data.token;
+        localStorage.setItem('tresor_admin_token', token);
+        afficherDashboard();
+      } else {
+        document.getElementById('loginErr').textContent = data.message || 'Identifiants incorrects';
+      }
+    } catch(e) {
+      document.getElementById('loginErr').textContent = 'Erreur de connexion';
+    }
+  }
+
+  function afficherDashboard() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    chargerStats();
+    chargerValidation();
+  }
+
+  function logout() {
+    localStorage.removeItem('tresor_admin_token');
+    location.reload();
+  }
+
+  function onglet(nom, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('actif'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('actif'));
+    btn.classList.add('actif');
+    document.getElementById('sec-' + nom).classList.add('actif');
+    if (nom === 'patients') chargerPatients();
+    if (nom === 'commandes') chargerCommandes();
+    if (nom === 'stats') chargerStats();
+    if (nom === 'validation') chargerValidation();
+  }
+
+  function alerte(msg, type) {
+    const el = document.getElementById('alerte');
+    el.textContent = msg;
+    el.className = 'alerte ' + type;
+    setTimeout(() => el.className = 'alerte', 4000);
+  }
+
+  // Stats
+  async function reprendreCesar(patientId) {
+    try {
+      const resp = await fetch(`${API}/api/admin/reprendre`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ patient_id: patientId })
+      });
+      const data = await resp.json();
+      if (data.success) { alerte('🤖 César reprend !', 'success'); chargerPatients(); }
+      else alerte('Erreur: ' + data.message, 'error');
+    } catch(e) { alerte('Erreur', 'error'); }
+  }
+
+  async function prendreLelais(patientId) {
+    try {
+      const resp = await fetch(`${API}/api/admin/prendre-relais`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ patient_id: patientId })
+      });
+      const data = await resp.json();
+      if (data.success) { alerte('👤 Wilson intervient !', 'success'); chargerPatients(); }
+      else alerte('Erreur: ' + data.message, 'error');
+    } catch(e) { alerte('Erreur', 'error'); }
+  }
+
+  async function chargerValidation() {
+    try {
+      const resp = await fetch(`${API}/api/validation`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await resp.json();
+      const messages = data.messages || [];
+      const badge = document.getElementById('badge-validation');
+      if (badge) { badge.textContent = messages.length; badge.style.display = messages.length > 0 ? 'inline' : 'none'; }
+      if (!messages.length) {
+        document.getElementById('validation-container').innerHTML = '<div style="padding:40px;text-align:center;color:#888;">🎉 Aucun message en attente !</div>';
+        return;
+      }
+      document.getElementById('validation-container').innerHTML = messages.map(m => `
+        <div style="padding:20px;border-bottom:1px solid #f0f0f0;" id="msg-${m.id}">
+          <strong>${m.prenom || 'Patient'}</strong> — <span style="color:#888;font-size:0.8rem;">${m.type || 'coaching'}</span>
+          ${m.question_patient ? `<div style="background:#f5f5f5;border-radius:8px;padding:10px;margin:8px 0;font-size:0.85rem;">${m.question_patient}</div>` : ''}
+          <textarea id="txt-${m.id}" style="width:100%;padding:8px;border:1px solid #c8e6c9;border-radius:6px;font-size:0.88rem;min-height:80px;">${m.reponse_proposee}</textarea>
+          <div style="display:flex;gap:10px;margin-top:10px;">
+            <button class="btn btn-green" onclick="approuver(${m.id})">✅ Approuver</button>
+            <button class="btn btn-blue" onclick="modifier(${m.id})">✏️ Modifier</button>
+            <button class="btn btn-red" onclick="rejeter(${m.id})">❌ Rejeter</button>
+          </div>
+        </div>`).join('');
+    } catch(e) { document.getElementById('validation-container').innerHTML = '<div style="padding:20px;color:red;">Erreur de chargement</div>'; }
+  }
+
+  async function approuver(id) {
+    try {
+      const resp = await fetch(`${API}/api/validation/approuver`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ id }) });
+      const data = await resp.json();
+      if (data.success) { alerte('✅ Envoyé !', 'success'); chargerValidation(); }
+    } catch(e) { alerte('Erreur', 'error'); }
+  }
+
+  async function modifier(id) {
+    const reponse_finale = document.getElementById(`txt-${id}`).value.trim();
+    if (!reponse_finale) return;
+    try {
+      const resp = await fetch(`${API}/api/validation/modifier`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ id, reponse_finale }) });
+      const data = await resp.json();
+      if (data.success) { alerte('✏️ Modifié et envoyé !', 'success'); chargerValidation(); }
+    } catch(e) { alerte('Erreur', 'error'); }
+  }
+
+  async function rejeter(id) {
+    if (!confirm('Rejeter ce message ?')) return;
+    try {
+      const resp = await fetch(`${API}/api/validation/rejeter`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ id }) });
+      const data = await resp.json();
+      if (data.success) { alerte('❌ Rejeté', 'success'); chargerValidation(); }
+    } catch(e) { alerte('Erreur', 'error'); }
+  }
+
+  async function chargerStats() {
+    try {
+      const [pResp, cResp] = await Promise.all([
+        fetch(`${API}/api/admin/patients`, { headers: { Authorization: `Bearer ${token}` } }),
+        fetch(`${API}/api/admin/commandes`, { headers: { Authorization: `Bearer ${token}` } })
+      ]);
+      const pData = await pResp.json();
+      const cData = await cResp.json();
+
+      const patients = pData.patients || [];
+      const commandes = cData.commandes || [];
+      const actifs = patients.filter(p => p.statut === 'actif').length;
+      const revenus = commandes.filter(c => c.statut === 'livre').reduce((s, c) => s + (c.montant || 0), 0);
+
+      document.getElementById('s-patients').textContent = patients.length;
+      document.getElementById('s-actifs').textContent = actifs;
+      document.getElementById('s-commandes').textContent = commandes.length;
+      document.getElementById('s-revenus').textContent = revenus.toLocaleString('fr-FR');
+    } catch(e) {}
+  }
+
+  // Patients
+  async function chargerPatients() {
+    try {
+      const resp = await fetch(`${API}/api/admin/patients`, { headers: { Authorization: `Bearer ${token}` } });
+      const data = await resp.json();
+      const patients = data.patients || [];
+
+      if (!patients.length) {
+        document.getElementById('patients-table').innerHTML = '<div class="empty">Aucun patient inscrit</div>';
+        return;
+      }
+
+      document.getElementById('patients-table').innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Prénom</th><th>Email</th><th>WhatsApp</th>
+              <th>Pathologie</th><th>Programme</th><th>Statut</th><th>Inscrit le</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${patients.map(p => `
+              <tr>
+                <td><strong>${p.prenom || '—'} ${p.nom || ''}</strong></td>
+                <td>${p.email || '—'}</td>
+                <td>${p.whatsapp || p.telephone || '—'}</td>
+                <td>${p.pathologie || '—'}</td>
+                <td>${p.programme || '—'}</td>
+                <td><span class="badge ${p.statut || 'actif'}">${p.statut || 'actif'}</span></td>
+                <td>${new Date(p.created_at).toLocaleDateString('fr-FR')}</td>
+                <td>
+                  ${p.mode === 'wilson' || p.mode === 'transfert' 
+                    ? `<button class="btn btn-green" onclick="reprendreCesar(${p.id})">🤖 César reprend</button>`
+                    : `<button class="btn btn-blue" onclick="prendreLelais(${p.id})">👤 Wilson intervient</button>`
+                  }
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    } catch(e) {
+      document.getElementById('patients-table').innerHTML = '<div class="empty">Erreur de chargement</div>';
+    }
+  }
+
+  // Commandes
+  async function chargerCommandes() {
+    try {
+      const resp = await fetch(`${API}/api/admin/commandes`, { headers: { Authorization: `Bearer ${token}` } });
+      const data = await resp.json();
+      const commandes = data.commandes || [];
+
+      if (!commandes.length) {
+        document.getElementById('commandes-table').innerHTML = '<div class="empty">Aucune commande</div>';
+        return;
+      }
+
+      document.getElementById('commandes-table').innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Client</th><th>Produit</th><th>Montant</th><th>Statut</th><th>Date</th><th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${commandes.map(c => `
+              <tr>
+                <td>#${c.id}</td>
+                <td>${c.prenom || c.email_contact || '—'}</td>
+                <td>${c.details?.titre || c.type_commande || '—'}</td>
+                <td>${(c.montant || 0).toLocaleString('fr-FR')} FCFA</td>
+                <td><span class="badge ${c.statut}">${c.statut}</span></td>
+                <td>${new Date(c.created_at).toLocaleDateString('fr-FR')}</td>
+                <td>
+                  ${c.statut === 'en_attente' ? `<button class="btn btn-green" onclick="livrer(${c.id}, '${c.telephone_contact || ''}')">✅ Livrer</button>` : '—'}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    } catch(e) {
+      document.getElementById('commandes-table').innerHTML = '<div class="empty">Erreur de chargement</div>';
+    }
+  }
+
+  async function livrer(commandeId, telephone) {
+    try {
+      const resp = await fetch(`${API}/api/ebooks/livrer`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ commande_id: commandeId, telephone })
+      });
+      const data = await resp.json();
+      if (data.success) {
+        alerte('✅ Commande livrée avec succès !', 'success');
+        chargerCommandes();
+      }
+    } catch(e) {
+      alerte('Erreur lors de la livraison', 'error');
+    }
+  }
+
+  // Cron manuel
+  async function envoyerCron(type) {
+    try {
+      const resp = await fetch(`${API}/api/messages/programme`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-cron-secret': 'tresor-cron-2026'
+        },
+        body: JSON.stringify({ type_message: type })
+      });
+      const data = await resp.json();
+      if (data.success) {
+        alerte(`✅ Messages "${type}" envoyés à ${data.total || 0} patient(s) !`, 'success');
+      }
+    } catch(e) {
+      alerte('Erreur envoi messages', 'error');
+    }
+  }
+
+  // Enter pour login
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+  });
+</script>
+
+</body>
+</html>

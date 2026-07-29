@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18332586077"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18332586077');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restauration — Trésor Santé</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a6b3a 0%, #2d9e5f 50%, #a8f0c6 100%);
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    header {
+      padding: 20px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { color: white; font-size: 1.4rem; font-weight: 700; text-decoration: none; }
+    .logo span { color: #a8f0c6; }
+    nav a { color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
+
+    .main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      padding: 56px 48px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .emoji-big { font-size: 5rem; margin-bottom: 24px; display: block; }
+
+    .badge {
+      display: inline-block;
+      background: #fff3e0;
+      color: #e65100;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #1a2e1a;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .features {
+      background: #f8fdf8;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .features h3 {
+      font-size: 0.9rem;
+      color: #888;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+    .feature-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 0;
+      font-size: 0.95rem;
+      color: #333;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .feature-item:last-child { border-bottom: none; }
+    .feature-item .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #2d9e5f; flex-shrink: 0;
+    }
+
+    .notify-form {
+      display: flex; gap: 10px;
+      margin-bottom: 24px;
+    }
+    .notify-form input {
+      flex: 1; padding: 13px 16px;
+      border: 2px solid #e0e0e0; border-radius: 10px;
+      font-size: 0.95rem; transition: border-color 0.2s;
+    }
+    .notify-form input:focus { outline: none; border-color: #2d9e5f; }
+    .btn-notify {
+      padding: 13px 20px;
+      background: linear-gradient(135deg, #1a6b3a, #2d9e5f);
+      color: white; border: none; border-radius: 10px;
+      font-weight: 700; cursor: pointer; white-space: nowrap;
+      font-size: 0.9rem;
+    }
+
+    .success-notif {
+      background: #e8f5e9; color: #1a6b3a;
+      padding: 12px; border-radius: 10px;
+      font-size: 0.9rem; margin-bottom: 20px;
+      display: none;
+    }
+
+    .divider { color: #ccc; margin: 20px 0; font-size: 0.85rem; }
+
+    .btn-whatsapp {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #25D366; color: white;
+      padding: 14px 28px; border-radius: 30px;
+      font-weight: 700; text-decoration: none;
+      font-size: 1rem; transition: opacity 0.2s;
+    }
+    .btn-whatsapp:hover { opacity: 0.9; }
+
+    .back-link {
+      display: block; margin-top: 24px;
+      color: #888; font-size: 0.88rem; text-decoration: none;
+    }
+    .back-link:hover { color: #2d9e5f; }
+
+    footer {
+      padding: 20px; text-align: center;
+      color: rgba(255,255,255,0.6); font-size: 0.82rem;
+    }
+
+    @media (max-width: 500px) {
+      .card { padding: 36px 24px; }
+      .notify-form { flex-direction: column; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo">Trésor<span>Santé</span></a>
+  <nav>
+    <a href="/">Accueil</a>
+    <a href="/boutique.html">Boutique</a>
+    <a href="/coaching.html">Mon Espace</a>
+  </nav>
+</header>
+
+<div class="main">
+  <div class="card">
+
+    <span class="emoji-big">🍽️</span>
+    <div class="badge">⏳ Bientôt disponible</div>
+
+    <h1>La Restauration Trésor arrive bientôt !</h1>
+
+    <p class="subtitle">
+      Nous préparons une sélection de plats sains préparés avec nos aliments locaux ivoiriens —
+      adaptés à votre programme, livrés chez vous à Abidjan.
+    </p>
+
+    <div class="features">
+      <h3>Au menu bientôt</h3>
+      <div class="feature-item"><div class="dot"></div>Plats cuisinés IG bas (fonio, gombo, légumes locaux)</div>
+      <div class="feature-item"><div class="dot"></div>Menus adaptés diabète, hypertension, perte de poids</div>
+      <div class="feature-item"><div class="dot"></div>Livraison à domicile à Abidjan</div>
+      <div class="feature-item"><div class="dot"></div>Préparation air fryer — zéro friture</div>
+      <div class="feature-item"><div class="dot"></div>Commande depuis votre espace Trésor</div>
+    </div>
+
+    <p style="font-size:0.9rem;color:#888;margin-bottom:14px;">
+      Laissez votre email pour être notifié dès l'ouverture :
+    </p>
+
+    <div class="success-notif" id="successNotif">
+      ✅ Parfait ! Vous serez parmi les premiers informés. 🌿
+    </div>
+
+    <div class="notify-form">
+      <input type="email" id="emailNotif" placeholder="votre@email.com" />
+      <button class="btn-notify" onclick="notifier()">Me notifier</button>
+    </div>
+
+    <div class="divider">— ou —</div>
+
+    <a href="https://wa.me/2250170726277?text=Bonjour%20César%20!%20Je%20suis%20intéressé(e)%20par%20la%20restauration%20Trésor.%20Quand%20sera-t-elle%20disponible%20?" class="btn-whatsapp" target="_blank">
+      💬 Demander à César sur WhatsApp
+    </a>
+
+    <a href="/" class="back-link">← Retour à l'accueil</a>
+
+  </div>
+</div>
+
+<footer>© 2026 Trésor Santé — Abidjan, Côte d'Ivoire 🌿</footer>
+
+<script>
+  function notifier() {
+    const email = document.getElementById('emailNotif').value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Veuillez entrer un email valide.');
+      return;
+    }
+    // Sauvegarder localement (on peut connecter à une API plus tard)
+    document.getElementById('successNotif').style.display = 'block';
+    document.querySelector('.notify-form').style.display = 'none';
+  }
+
+  document.getElementById('emailNotif').addEventListener('keydown', e => {
+    if (e.key === 'Enter') notifier();
+  });
+</script>
+
+</body>
+</html>

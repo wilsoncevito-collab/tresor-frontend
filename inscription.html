@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18332586077"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18332586077');
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trésor · Inscription</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+:root{--vert:#1a3a2a;--vert-m:#2d5a3d;--vert-c:#4a8c5c;--or:#c9a84c;--or-c:#e8c97a;--creme:#f5f0e8;--blanc:#fdfaf4;--texte:#1a2818;--doux:#4a5e44;--border:rgba(26,58,42,.12);--rouge:#e74c3c;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--blanc);color:var(--texte);min-height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+
+/* ── GAUCHE — visuel ── */
+.left{background:var(--vert);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem;}
+.left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 80% 30%,rgba(201,168,76,.12) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 20% 80%,rgba(74,140,92,.15) 0%,transparent 60%);}
+.left-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(201,168,76,.05) 1px,transparent 1px);background-size:28px 28px;}
+.left-top{position:relative;z-index:2;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--or-c);letter-spacing:.04em;text-decoration:none;}
+.logo span{color:rgba(255,255,255,.6);font-weight:300;}
+.left-content{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:center;padding:2rem 0;}
+.left-content h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;color:#fff;line-height:1.1;margin-bottom:1rem;}
+.left-content h2 em{font-style:italic;color:var(--or-c);}
+.left-content p{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.8;font-weight:300;max-width:380px;margin-bottom:2rem;}
+.results{display:flex;flex-direction:column;gap:.8rem;}
+.result-item{display:flex;align-items:center;gap:.9rem;background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.2);border-radius:.8rem;padding:.9rem 1.1rem;}
+.result-icon{font-size:1.2rem;flex-shrink:0;}
+.result-text strong{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--or-c);}
+.result-text span{font-size:.72rem;color:rgba(255,255,255,.45);display:block;margin-top:.1rem;font-weight:300;}
+.left-bottom{position:relative;z-index:2;}
+.left-link{font-size:.78rem;color:rgba(255,255,255,.4);text-decoration:none;}
+.left-link a{color:var(--or-c);text-decoration:none;}
+.left-link a:hover{text-decoration:underline;}
+
+/* ── DROITE — formulaire ── */
+.right{padding:2.5rem 3rem;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;}
+.form-header{margin-bottom:2.5rem;}
+.form-header h1{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--vert);margin-bottom:.3rem;}
+.form-header p{font-size:.82rem;color:var(--doux);font-weight:300;}
+
+/* Étapes */
+.etapes{display:flex;align-items:center;gap:.4rem;margin-bottom:2.5rem;}
+.etape{display:flex;align-items:center;gap:.4rem;}
+.etape-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;transition:all .3s;}
+.etape-dot.active{background:var(--vert);color:var(--or-c);}
+.etape-dot.done{background:var(--vert-c);color:#fff;}
+.etape-dot.inactive{background:var(--creme);color:var(--doux);}
+.etape-label{font-size:.68rem;color:var(--doux);font-weight:500;}
+.etape-sep{flex:1;height:1px;background:var(--border);}
+
+/* Form groups */
+.form-section{display:none;}
+.form-section.active{display:block;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.form-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem;}
+.form-group.full{grid-column:1/-1;}
+label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--doux);font-weight:600;}
+input,select{padding:.7rem .9rem;border-radius:.7rem;border:1px solid var(--border);font-size:.88rem;color:var(--texte);font-family:'DM Sans',sans-serif;background:var(--blanc);transition:border-color .25s,box-shadow .25s;outline:none;}
+input:focus,select:focus{border-color:var(--vert-c);box-shadow:0 0 0 3px rgba(74,140,92,.1);}
+input.error,select.error{border-color:var(--rouge);}
+.err-msg{font-size:.68rem;color:var(--rouge);margin-top:.2rem;display:none;}
+.err-msg.show{display:block;}
+
+/* Pathologie cards */
+.patho-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-bottom:1rem;}
+.patho-card{border:1.5px solid var(--border);border-radius:.9rem;padding:1rem;cursor:pointer;transition:all .25s;text-align:center;}
+.patho-card:hover{border-color:var(--vert-c);background:rgba(74,140,92,.04);}
+.patho-card.selected{border-color:var(--vert);background:rgba(26,58,42,.05);}
+.patho-card input[type=radio]{display:none;}
+.patho-emoji{font-size:1.5rem;display:block;margin-bottom:.4rem;}
+.patho-name{font-size:.8rem;font-weight:600;color:var(--vert);}
+.patho-desc{font-size:.68rem;color:var(--doux);font-weight:300;margin-top:.2rem;}
+
+/* Programme cards */
+.prog-grid{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1rem;}
+.prog-card{border:1.5px solid var(--border);border-radius:.9rem;padding:1rem 1.2rem;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:space-between;}
+.prog-card:hover{border-color:var(--vert-c);}
+.prog-card.selected{border-color:var(--vert);background:rgba(26,58,42,.04);}
+.prog-card input[type=radio]{display:none;}
+.prog-info h4{font-size:.88rem;font-weight:600;color:var(--vert);}
+.prog-info p{font-size:.72rem;color:var(--doux);font-weight:300;}
+.prog-prix{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--vert);}
+
+/* Boutons navigation */
+.form-nav{display:flex;gap:1rem;margin-top:1.5rem;}
+.btn-next{flex:1;padding:.85rem;border-radius:3rem;background:var(--vert);color:#fff;border:none;font-size:.88rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;}
+.btn-next:hover{background:var(--vert-m);}
+.btn-next:disabled{background:#ccc;cursor:not-allowed;}
+.btn-back{padding:.85rem 1.8rem;border-radius:3rem;background:var(--creme);color:var(--vert);border:none;font-size:.88rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;}
+.btn-back:hover{background:#e8e0d0;}
+
+/* Loader */
+.loader{display:none;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:2rem;text-align:center;}
+.loader.show{display:flex;}
+.spinner{width:40px;height:40px;border:3px solid var(--creme);border-top-color:var(--vert);border-radius:50%;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader p{font-size:.85rem;color:var(--doux);font-weight:300;}
+
+/* Succès */
+.succes{display:none;text-align:center;padding:2rem;}
+.succes.show{display:block;}
+.succes-icon{font-size:4rem;margin-bottom:1.2rem;}
+.succes h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--vert);margin-bottom:.8rem;}
+.succes p{font-size:.85rem;color:var(--doux);font-weight:300;line-height:1.7;margin-bottom:1.5rem;}
+
+/* Alerte erreur globale */
+.alert-error{background:#fef0f0;border:1px solid #f5c6c6;border-radius:.8rem;padding:1rem 1.2rem;font-size:.82rem;color:var(--rouge);margin-bottom:1.2rem;display:none;}
+.alert-error.show{display:block;}
+
+@media(max-width:768px){
+  body{grid-template-columns:1fr;}
+  .left{display:none;}
+  .right{padding:2rem 1.5rem;}
+}
+</style>
+<!-- Event snippet conversion inscription -->
+<script>
+  gtag('event', 'conversion', {
+    'send_to': 'AW-18332586077/_VppCJD4t9IcEN2g1KVE',
+    'value': 1.0,
+    'currency': 'USD'
+  });
+</script>
+</head>
+<body>
+
+<!-- GAUCHE -->
+<div class="left">
+  <div class="left-dots"></div>
+  <div class="left-top">
+    <a href="index.html" class="logo">Tré<span>sor</span></a>
+  </div>
+  <div class="left-content">
+    <h2>Commence ta<br/><em>transformation santé</em></h2>
+    <p>Rejoins Trésor et bénéficie d'un programme personnalisé, d'un coach IA 24h/24 et d'un suivi complet de ta santé.</p>
+    <div class="results">
+      <div class="result-item">
+        <span class="result-icon">🩸</span>
+        <div class="result-text"><strong>Glycémie 1,5 → 0,8 g/L</strong><span>En seulement 3 mois · Méthode prouvée</span></div>
+      </div>
+      <div class="result-item">
+        <span class="result-icon">⚖️</span>
+        <div class="result-text"><strong>−18 à −20 kg</strong><span>En 5 mois · Sans chirurgie ni médicament</span></div>
+      </div>
+      <div class="result-item">
+        <span class="result-icon">🤖</span>
+        <div class="result-text"><strong>Coach IA WhatsApp 24h/24</strong><span>Suivi quotidien personnalisé</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="left-bottom">
+    <p class="left-link">Déjà inscrit ? <a href="connexion.html">Se connecter →</a></p>
+  </div>
+</div>
+
+<!-- DROITE -->
+<div class="right">
+  <div class="form-header">
+    <h1>Créer mon compte</h1>
+    <p>3 étapes rapides — moins de 2 minutes</p>
+  </div>
+
+  <!-- ÉTAPES INDICATEUR -->
+  <div class="etapes">
+    <div class="etape">
+      <div class="etape-dot active" id="dot1">1</div>
+      <span class="etape-label">Infos</span>
+    </div>
+    <div class="etape-sep"></div>
+    <div class="etape">
+      <div class="etape-dot inactive" id="dot2">2</div>
+      <span class="etape-label">Santé</span>
+    </div>
+    <div class="etape-sep"></div>
+    <div class="etape">
+      <div class="etape-dot inactive" id="dot3">3</div>
+      <span class="etape-label">Programme</span>
+    </div>
+  </div>
+
+  <!-- ALERTE ERREUR -->
+  <div class="alert-error" id="alertError"></div>
+
+  <!-- ÉTAPE 1 — Informations personnelles -->
+  <div class="form-section active" id="step1">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Prénom</label>
+        <input type="text" id="prenom" placeholder="Kouamé"/>
+        <span class="err-msg" id="err-prenom">Prénom requis</span>
+      </div>
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" id="nom" placeholder="Diabaté"/>
+        <span class="err-msg" id="err-nom">Nom requis</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="kouame@gmail.com"/>
+      <span class="err-msg" id="err-email">Email valide requis</span>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Téléphone / WhatsApp</label>
+        <input type="tel" id="telephone" placeholder="07 00 00 00 00"/>
+        <span class="err-msg" id="err-tel">Téléphone requis</span>
+      </div>
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" id="motdepasse" placeholder="Min. 8 caractères"/>
+        <span class="err-msg" id="err-mdp">8 caractères minimum</span>
+      </div>
+    </div>
+    <div class="form-nav">
+      <button class="btn-next" onclick="validerStep1()">Continuer →</button>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 — Santé -->
+  <div class="form-section" id="step2">
+    <p style="font-size:.82rem;color:var(--doux);margin-bottom:1.2rem;font-weight:300;">Sélectionne ta pathologie principale pour que nous personnalisions ton programme.</p>
+    <div class="patho-grid">
+      <label class="patho-card" onclick="selectPatho('diabete',this)">
+        <input type="radio" name="pathologie" value="diabete"/>
+        <span class="patho-emoji">🩸</span>
+        <div class="patho-name">Diabète</div>
+        <div class="patho-desc">Glycémie élevée</div>
+      </label>
+      <label class="patho-card" onclick="selectPatho('hypertension',this)">
+        <input type="radio" name="pathologie" value="hypertension"/>
+        <span class="patho-emoji">❤️</span>
+        <div class="patho-name">Hypertension</div>
+        <div class="patho-desc">Tension artérielle</div>
+      </label>
+      <label class="patho-card" onclick="selectPatho('cardio',this)">
+        <input type="radio" name="pathologie" value="cardio"/>
+        <span class="patho-emoji">🫀</span>
+        <div class="patho-name">Cardiaque</div>
+        <div class="patho-desc">Santé du cœur</div>
+      </label>
+      <label class="patho-card" onclick="selectPatho('poids',this)">
+        <input type="radio" name="pathologie" value="poids"/>
+        <span class="patho-emoji">⚖️</span>
+        <div class="patho-name">Poids</div>
+        <div class="patho-desc">Perte de poids</div>
+      </label>
+    </div>
+    <span class="err-msg" id="err-patho">Sélectionne une pathologie</span>
+
+    <div class="form-row" style="margin-top:1rem;">
+      <div class="form-group">
+        <label>Glycémie actuelle (g/L)</label>
+        <input type="number" id="glycemie" step="0.01" placeholder="ex: 1.50"/>
+      </div>
+      <div class="form-group">
+        <label>Poids actuel (kg)</label>
+        <input type="number" id="poids" step="0.1" placeholder="ex: 95.0"/>
+      </div>
+    </div>
+    <div class="form-nav">
+      <button class="btn-back" onclick="goStep(1)">← Retour</button>
+      <button class="btn-next" onclick="validerStep2()">Continuer →</button>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 — Programme -->
+  <div class="form-section" id="step3">
+    <p style="font-size:.82rem;color:var(--doux);margin-bottom:1.2rem;font-weight:300;">Choisis la durée de ton programme coaching.</p>
+    <div class="prog-grid">
+      <label class="prog-card selected" onclick="selectProg('3mois',this)">
+        <input type="radio" name="programme" value="3mois" checked/>
+        <div class="prog-info"><h4>Programme 3 mois</h4><p>Idéal pour démarrer · Paiement en 3 fois</p></div>
+        <span class="prog-prix">45 000 FCFA</span>
+      </label>
+      <label class="prog-card" onclick="selectProg('5mois',this)">
+        <input type="radio" name="programme" value="5mois"/>
+        <div class="prog-info"><h4>Programme 5 mois</h4><p>Transformation complète · Paiement en 5 fois</p></div>
+        <span class="prog-prix">65 000 FCFA</span>
+      </label>
+      <label class="prog-card" onclick="selectProg('famille',this)">
+        <input type="radio" name="programme" value="famille"/>
+        <div class="prog-info"><h4>Pack Famille</h4><p>2 personnes · 5 mois · Économisez 20 000 FCFA</p></div>
+        <span class="prog-prix">110 000 FCFA</span>
+      </label>
+    </div>
+    <span class="err-msg" id="err-prog">Sélectionne un programme</span>
+    <div class="form-nav">
+      <button class="btn-back" onclick="goStep(2)">← Retour</button>
+      <button class="btn-next" id="btnSubmit" onclick="soumettre()">Créer mon compte →</button>
+    </div>
+  </div>
+
+  <!-- LOADER -->
+  <div class="loader" id="loader">
+    <div class="spinner"></div>
+    <p>Création de votre compte Trésor…</p>
+  </div>
+
+  <!-- SUCCÈS -->
+  <div class="succes" id="succes">
+    <div class="succes-icon">🌿</div>
+    <h3>Bienvenue chez Trésor !</h3>
+    <p>Votre compte est créé. Votre agent coach va vous contacter sur WhatsApp dans les prochaines minutes.<br/><br/>Accédez maintenant à votre tableau de bord.</p>
+    <button class="btn-next" onclick="window.location.href='coaching.html'">Accéder à mon espace →</button>
+  </div>
+</div>
+
+<script>
+  const API_URL = 'https://tresor-backend-production.up.railway.app/api';
+
+  let etapeActuelle = 1;
+  let pathologieSelectionnee = '';
+  let programmeSelectionne = '3mois';
+
+  // ── NAVIGATION ÉTAPES ──
+  function goStep(n) {
+    document.getElementById(`step${etapeActuelle}`).classList.remove('active');
+    document.getElementById(`step${n}`).classList.add('active');
+    // Dots
+    for (let i = 1; i <= 3; i++) {
+      const dot = document.getElementById(`dot${i}`);
+      dot.className = 'etape-dot ' + (i < n ? 'done' : i === n ? 'active' : 'inactive');
+      dot.textContent = i < n ? '✓' : i;
+    }
+    etapeActuelle = n;
+    document.querySelector('.alert-error').classList.remove('show');
+  }
+
+  // ── SÉLECTIONS ──
+  function selectPatho(val, el) {
+    pathologieSelectionnee = val;
+    document.querySelectorAll('.patho-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('err-patho').classList.remove('show');
+  }
+
+  function selectProg(val, el) {
+    programmeSelectionne = val;
+    document.querySelectorAll('.prog-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  // ── VALIDATION ÉTAPE 1 ──
+  function validerStep1() {
+    let ok = true;
+    const champs = [
+      { id: 'prenom', err: 'err-prenom', test: v => v.trim().length > 0 },
+      { id: 'nom', err: 'err-nom', test: v => v.trim().length > 0 },
+      { id: 'email', err: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+      { id: 'telephone', err: 'err-tel', test: v => v.trim().length >= 8 },
+      { id: 'motdepasse', err: 'err-mdp', test: v => v.length >= 8 }
+    ];
+    champs.forEach(({ id, err, test }) => {
+      const val = document.getElementById(id).value;
+      const input = document.getElementById(id);
+      const errEl = document.getElementById(err);
+      if (!test(val)) {
+        input.classList.add('error');
+        errEl.classList.add('show');
+        ok = false;
+      } else {
+        input.classList.remove('error');
+        errEl.classList.remove('show');
+      }
+    });
+    if (ok) goStep(2);
+  }
+
+  // ── VALIDATION ÉTAPE 2 ──
+  function validerStep2() {
+    if (!pathologieSelectionnee) {
+      document.getElementById('err-patho').classList.add('show');
+      return;
+    }
+    goStep(3);
+  }
+
+  // ── SOUMISSION FINALE ──
+  async function soumettre() {
+    const btn = document.getElementById('btnSubmit');
+    btn.disabled = true;
+    document.getElementById('step3').classList.remove('active');
+    document.getElementById('loader').classList.add('show');
+
+    const payload = {
+      prenom: document.getElementById('prenom').value.trim(),
+      nom: document.getElementById('nom').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      mot_de_passe: document.getElementById('motdepasse').value,
+      telephone: document.getElementById('telephone').value.trim(),
+      whatsapp: document.getElementById('telephone').value.trim(),
+      pathologie: pathologieSelectionnee,
+      programme: programmeSelectionne,
+      glycemie_depart: parseFloat(document.getElementById('glycemie').value) || null,
+      poids_depart: parseFloat(document.getElementById('poids').value) || null,
+      code_verification: document.getElementById('code_verification')?.value?.trim() || ''
+    };
+
+    try {
+      const resp = await fetch(`${API_URL}/auth/inscription`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await resp.json();
+      document.getElementById('loader').classList.remove('show');
+
+      if (data.success) {
+        // Sauvegarder token et patient
+        localStorage.setItem('tresor_token', data.token);
+        localStorage.setItem('tresor_patient', JSON.stringify(data.patient));
+        // Afficher succès
+        document.getElementById('succes').classList.add('show');
+      } else {
+        // Afficher erreur sans revenir au debut
+        const msg = data.message || (data.errors?.[0]?.msg) || 'Erreur lors de l\'inscription';
+        document.getElementById('loader').classList.remove('show');
+        alert('Erreur : ' + msg);
+        document.getElementById('step3').classList.add('active');
+        btn.disabled = false;
+      }
+
+    } catch (err) {
+      document.getElementById('loader').classList.remove('show');
+      afficherErreur('Erreur de connexion. Vérifiez votre internet et réessayez.');
+      goStep(1);
+      btn.disabled = false;
+    }
+  }
+
+  function afficherErreur(msg) {
+    const el = document.getElementById('alertError');
+    el.textContent = '⚠️ ' + msg;
+    el.classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
