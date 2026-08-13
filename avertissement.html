@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avertissement · Trésor</title>
+<style>
+  :root {
+    --vert-fonce: #123425;
+    --vert: #1f5c3f;
+    --vert-clair: #2e7d52;
+    --creme: #f7faf8;
+    --texte: #2b3a2b;
+    --bordure: #e2ede4;
+    --jaune-bg: #fff8ea;
+    --jaune-bord: #f0d896;
+    --jaune-texte: #6b5416;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--texte);
+    background: var(--creme);
+    line-height: 1.7;
+  }
+  a { color: var(--vert-clair); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--bordure);
+    padding: 18px 6vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  header .logo { font-weight: 700; font-size: 20px; color: var(--vert-fonce); }
+  header nav a { color: var(--texte); margin-left: 28px; font-size: 14.5px; font-weight: 500; }
+  header nav a.cta {
+    background: var(--vert-fonce); color: #fff; padding: 9px 20px; border-radius: 30px;
+  }
+  header nav a.cta:hover { text-decoration: none; opacity: 0.9; }
+
+  .hero-legal {
+    background: linear-gradient(160deg, var(--vert-fonce), var(--vert-clair));
+    color: #fff;
+    padding: 60px 6vw 50px;
+    text-align: center;
+  }
+  .hero-legal .eyebrow {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.85; margin-bottom: 14px;
+  }
+  .hero-legal h1 { font-size: 32px; margin-bottom: 10px; }
+
+  main { max-width: 760px; margin: 0 auto; padding: 50px 6vw 90px; }
+
+  .intro-box {
+    background: #fff;
+    border: 1px solid var(--bordure);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 34px;
+    font-size: 15.5px;
+  }
+  .intro-box strong { color: var(--vert-fonce); }
+
+  main h2 {
+    font-size: 19px; color: var(--vert-fonce); margin: 34px 0 12px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--bordure);
+  }
+  main p, main li { font-size: 15px; color: var(--texte); margin-bottom: 12px; }
+  main ul { padding-left: 20px; margin-bottom: 14px; }
+
+  .warning-box {
+    background: var(--jaune-bg);
+    border: 1px solid var(--jaune-bord);
+    border-radius: 10px;
+    padding: 18px 20px;
+    color: var(--jaune-texte);
+    font-size: 14.5px;
+    margin: 18px 0;
+  }
+  .warning-box strong { color: #4a3a0d; }
+
+  .contact-box {
+    margin-top: 40px;
+    background: #fff;
+    border: 1px solid var(--bordure);
+    border-left: 4px solid var(--vert-clair);
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+
+  footer {
+    background: var(--vert-fonce); color: #cfe3d6; text-align: center; padding: 30px 6vw; font-size: 13px;
+  }
+  footer a { color: #fff; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Trésor</div>
+  <nav>
+    <a href="restauration.html">Restauration</a>
+    <a href="boutique.html">Boutique</a>
+    <a href="coaching.html">Coaching</a>
+    <a href="inscription.html" class="cta">Commencer</a>
+  </nav>
+</header>
+
+<div class="hero-legal">
+  <div class="eyebrow">Trésor Santé</div>
+  <h1>Avertissement</h1>
+</div>
+
+<main>
+  <div class="intro-box">
+    <strong>Trésor Santé n'est pas un service médical, un cabinet médical, ni un substitut à une consultation, un diagnostic ou un traitement délivré par un professionnel de santé qualifié.</strong>
+    C'est un programme d'accompagnement et d'éducation autour de l'alimentation, du mode de vie et du bien-être.
+  </div>
+
+  <h2>Notre assistant César (intelligence artificielle)</h2>
+  <p>César est un assistant conversationnel automatisé, qui s'appuie sur des modèles d'intelligence artificielle pour vous accompagner au quotidien (rappels, conseils alimentaires, encouragements).</p>
+  <ul>
+    <li>Les réponses de César sont générées automatiquement et peuvent, comme toute intelligence artificielle, contenir des erreurs, des approximations ou des informations incomplètes</li>
+    <li>César ne pose aucun diagnostic médical et ne remplace pas l'avis d'un professionnel de santé</li>
+    <li>En cas de doute, de symptôme inhabituel, ou de question médicale précise, consultez toujours un médecin ou un professionnel de santé qualifié</li>
+  </ul>
+
+  <h2>Contenus sur les plantes et solutions naturelles</h2>
+  <p>Les informations partagées concernant les plantes, la phytothérapie ou les remèdes naturels locaux sont fournies à titre <strong>éducatif et informatif uniquement</strong>. Elles ne constituent pas une prescription et ne remplacent pas :</p>
+  <ul>
+    <li>Votre traitement médical en cours</li>
+    <li>L'avis de votre médecin ou pharmacien, en particulier en cas de grossesse, de traitement médicamenteux en cours, ou de pathologie sévère</li>
+  </ul>
+
+  <h2>Résultats individuels</h2>
+  <p>Les résultats mentionnés (perte de poids, amélioration de la glycémie, etc.) sont des exemples issus de parcours individuels. <strong>Les résultats varient d'une personne à l'autre</strong> selon de nombreux facteurs (état de santé initial, assiduité, contexte médical). Trésor Santé ne garantit aucun résultat spécifique.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ En cas d'urgence :</strong> Trésor Santé n'est pas un service d'urgence. En cas de symptôme grave, de malaise ou d'urgence médicale, contactez immédiatement les services d'urgence locaux ou rendez-vous dans l'établissement de santé le plus proche.
+  </div>
+
+  <h2>Responsabilité</h2>
+  <p>En utilisant les services de Trésor Santé, vous reconnaissez que ce programme est un accompagnement complémentaire, et que la responsabilité de vos décisions de santé finales vous incombe, idéalement en concertation avec un professionnel de santé.</p>
+
+  <div class="contact-box">
+    <p><strong>Wilson &amp; Co — Trésor Santé</strong></p>
+    <p>📧 wilsoncevito@gmail.com</p>
+  </div>
+
+  <p style="margin-top:30px;"><a href="confidentialite.html">→ Consulter aussi notre politique de confidentialité</a></p>
+</main>
+
+<footer>
+  © 2026 Trésor · Tous droits réservés · Abidjan, CI
+</footer>
+
+</body>
+</html>
