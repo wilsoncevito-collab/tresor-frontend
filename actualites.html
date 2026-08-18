@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18332586077"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18332586077');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actualités Santé — Trésor Santé</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vert: #1a3a2a;
+    --vert-m: #2d5a3d;
+    --vert-c: #2d9e5f;
+    --or: #c9a84c;
+    --creme: #faf8f3;
+    --texte: #1a2e1a;
+    --gris: #6b7c6b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--creme);
+    color: var(--texte);
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--vert);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: white;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--or); }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--or); }
+
+  /* ── HERO ACTUALITÉS ── */
+  .hero-actu {
+    background: linear-gradient(135deg, var(--vert) 0%, var(--vert-m) 100%);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-actu::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(201,168,76,0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .hero-actu .tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--or);
+    padding: 0.35rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .hero-actu h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: white;
+    line-height: 1.2;
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .hero-actu h1 em {
+    color: var(--or);
+    font-style: italic;
+  }
+
+  .hero-actu p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  /* ── FILTRES ── */
+  .filtres {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1.5rem 2rem;
+    overflow-x: auto;
+    background: white;
+    border-bottom: 1px solid #e8ede8;
+    scrollbar-width: none;
+  }
+
+  .filtres::-webkit-scrollbar { display: none; }
+
+  .filtre-btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    border: 1.5px solid #d0ddd0;
+    background: white;
+    color: var(--gris);
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .filtre-btn:hover, .filtre-btn.actif {
+    background: var(--vert);
+    color: white;
+    border-color: var(--vert);
+  }
+
+  /* ── GRILLE ARTICLES ── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .section-titre {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-titre h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--vert);
+  }
+
+  .section-titre .ligne {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, #d0ddd0, transparent);
+  }
+
+  /* Article vedette */
+  .article-vedette {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    min-height: 280px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .article-vedette:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+
+  .vedette-visuel {
+    background: linear-gradient(135deg, var(--vert) 0%, var(--vert-c) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vedette-visuel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .vedette-visuel .icone-grande {
+    font-size: 5rem;
+    position: relative;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+  }
+
+  .vedette-contenu {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .badge-pathologie {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .badge-diabete { background: #e8f5e9; color: #2d9e5f; }
+  .badge-hypertension { background: #fce4ec; color: #c62828; }
+  .badge-poids { background: #e3f2fd; color: #1565c0; }
+  .badge-general { background: #f3e5f5; color: #6a1b9a; }
+  .badge-alimentation { background: #fff8e1; color: #e65100; }
+
+  .vedette-contenu h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--vert);
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+  }
+
+  .vedette-contenu p {
+    color: var(--gris);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .vedette-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .vedette-date {
+    font-size: 0.78rem;
+    color: var(--gris);
+  }
+
+  .btn-lire {
+    background: var(--vert);
+    color: white;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .btn-lire:hover { background: var(--vert-m); }
+
+  /* Grille articles secondaires */
+  .grille-articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .article-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .article-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+  }
+
+  .card-visuel {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+
+  .card-visuel.diabete { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+  .card-visuel.hypertension { background: linear-gradient(135deg, #fce4ec, #f8bbd0); }
+  .card-visuel.poids { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
+  .card-visuel.general { background: linear-gradient(135deg, #f3e5f5, #e1bee7); }
+  .card-visuel.alimentation { background: linear-gradient(135deg, #fff8e1, #ffecb3); }
+
+  .card-contenu { padding: 1.25rem; }
+
+  .card-contenu h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--vert);
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-contenu p {
+    font-size: 0.82rem;
+    color: var(--gris);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-date { font-size: 0.72rem; color: #a0b0a0; }
+
+  .btn-source {
+    font-size: 0.72rem;
+    color: var(--vert-c);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* Modal article */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.ouvert {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: white;
+    border-radius: 20px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+  }
+
+  .modal-overlay.ouvert .modal {
+    transform: translateY(0);
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, var(--vert), var(--vert-m));
+    padding: 2rem;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+  }
+
+  .modal-fermer {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-header h2 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 1.4rem;
+    line-height: 1.3;
+    padding-right: 2rem;
+  }
+
+  .modal-body { padding: 2rem; }
+
+  .modal-body p {
+    color: var(--texte);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-source {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--creme);
+    border-radius: 10px;
+    font-size: 0.82rem;
+    color: var(--gris);
+  }
+
+  .modal-source a {
+    color: var(--vert-c);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 4rem;
+    color: var(--gris);
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e8ede8;
+    border-top-color: var(--vert-c);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Vide */
+  .vide {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--gris);
+  }
+
+  .vide .emoji { font-size: 3rem; margin-bottom: 1rem; }
+
+  /* Footer */
+  footer {
+    background: var(--vert);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+    margin-top: 4rem;
+  }
+
+  footer a { color: var(--or); text-decoration: none; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .article-vedette {
+      grid-template-columns: 1fr;
+    }
+    .vedette-visuel { min-height: 160px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Tré<span>sor</span></a>
+  <div class="nav-links">
+    <a href="/">Accueil</a>
+    <a href="/boutique.html">Boutique</a>
+    <a href="/coaching.html">Coaching</a>
+    <a href="/inscription.html">S'inscrire</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-actu">
+  <div class="tag">📰 Actualités Santé</div>
+  <h1>La science au service<br>de votre <em>santé naturelle</em></h1>
+  <p>Les meilleures découvertes en nutrition et santé, traduites en conseils pratiques pour vous — 2 fois par semaine.</p>
+</div>
+
+<!-- FILTRES -->
+<div class="filtres">
+  <button class="filtre-btn actif" onclick="filtrer('tous', this)">Tout voir</button>
+  <button class="filtre-btn" onclick="filtrer('diabete', this)">🩸 Diabète</button>
+  <button class="filtre-btn" onclick="filtrer('hypertension', this)">❤️ Hypertension</button>
+  <button class="filtre-btn" onclick="filtrer('poids', this)">⚖️ Poids</button>
+  <button class="filtre-btn" onclick="filtrer('alimentation', this)">🥗 Alimentation</button>
+  <button class="filtre-btn" onclick="filtrer('general', this)">🌿 Général</button>
+</div>
+
+<!-- CONTENU -->
+<div class="container">
+  <div id="contenu">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Chargement des actualités...</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="fermerModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-fermer" onclick="fermerModal()">✕</button>
+      <h2 id="modal-titre"></h2>
+    </div>
+    <div class="modal-body">
+      <p id="modal-article"></p>
+      <div class="modal-source" id="modal-source-zone">
+        <span>🔗 Source :</span>
+        <a id="modal-source" href="#" target="_blank">Lire l'article original</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Trésor Santé — <a href="/">tresor-health.com</a> | Trésor-health prend soin de vous 🌿</p>
+</footer>
+
+<script>
+  const API = 'https://tresor-backend-production.up.railway.app/api';
+  let toutesActualites = [];
+  let filtreActif = 'tous';
+
+  // Icônes par pathologie
+  const icones = {
+    diabete: '🩸',
+    hypertension: '❤️',
+    poids: '⚖️',
+    alimentation: '🥗',
+    general: '🌿'
+  };
+
+  function getIcone(pathologie) {
+    return icones[(pathologie || 'general').toLowerCase()] || '🌿';
+  }
+
+  function getBadgeClass(pathologie) {
+    const p = (pathologie || 'general').toLowerCase();
+    return `badge-${p}`;
+  }
+
+  function getVisuelClass(pathologie) {
+    const p = (pathologie || 'general').toLowerCase();
+    return p;
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function filtrer(pathologie, btn) {
+    filtreActif = pathologie;
+    document.querySelectorAll('.filtre-btn').forEach(b => b.classList.remove('actif'));
+    btn.classList.add('actif');
+    afficher(toutesActualites);
+  }
+
+  function afficher(articles) {
+    const filtered = filtreActif === 'tous'
+      ? articles
+      : articles.filter(a => (a.pathologie || 'general').toLowerCase() === filtreActif);
+
+    const contenu = document.getElementById('contenu');
+
+    if (!filtered.length) {
+      contenu.innerHTML = `
+        <div class="vide">
+          <div class="emoji">📭</div>
+          <p>Aucune actualité dans cette catégorie pour le moment.</p>
+          <p style="margin-top:8px;font-size:0.85rem;">Revenez bientôt — nous publions 2 fois par semaine !</p>
+        </div>`;
+      return;
+    }
+
+    const vedette = filtered[0];
+    const autres = filtered.slice(1);
+
+    let html = `
+      <div class="section-titre">
+        <h2>À la une</h2>
+        <div class="ligne"></div>
+      </div>
+      <div class="article-vedette" onclick="ouvrirModal(${vedette.id})">
+        <div class="vedette-visuel">
+          <span class="icone-grande">${getIcone(vedette.pathologie)}</span>
+        </div>
+        <div class="vedette-contenu">
+          <span class="badge-pathologie ${getBadgeClass(vedette.pathologie)}">${vedette.pathologie || 'Général'}</span>
+          <h3>${vedette.headline}</h3>
+          <p>${vedette.article}</p>
+          <div class="vedette-meta">
+            <span class="vedette-date">📅 ${formatDate(vedette.date_publication || vedette.created_at)}</span>
+            <span class="btn-lire">Lire →</span>
+          </div>
+        </div>
+      </div>`;
+
+    if (autres.length) {
+      html += `
+        <div class="section-titre" style="margin-top:2.5rem;">
+          <h2>Dernières actualités</h2>
+          <div class="ligne"></div>
+        </div>
+        <div class="grille-articles">
+          ${autres.map(a => `
+            <div class="article-card" onclick="ouvrirModal(${a.id})">
+              <div class="card-visuel ${getVisuelClass(a.pathologie)}">${getIcone(a.pathologie)}</div>
+              <div class="card-contenu">
+                <span class="badge-pathologie ${getBadgeClass(a.pathologie)}" style="font-size:0.65rem;padding:0.2rem 0.6rem;">${a.pathologie || 'Général'}</span>
+                <h4 style="margin-top:0.5rem;">${a.headline}</h4>
+                <p>${a.article}</p>
+                <div class="card-footer">
+                  <span class="card-date">📅 ${formatDate(a.date_publication || a.created_at)}</span>
+                  ${a.source_url ? `<a class="btn-source" href="${a.source_url}" target="_blank" onclick="event.stopPropagation()">Source →</a>` : ''}
+                </div>
+              </div>
+            </div>`).join('')}
+        </div>`;
+    }
+
+    contenu.innerHTML = html;
+  }
+
+  function ouvrirModal(id) {
+    const article = toutesActualites.find(a => a.id === id);
+    if (!article) return;
+    document.getElementById('modal-titre').textContent = article.headline;
+    document.getElementById('modal-article').textContent = article.article;
+    const sourceZone = document.getElementById('modal-source-zone');
+    const sourceLink = document.getElementById('modal-source');
+    if (article.source_url) {
+      sourceZone.style.display = 'flex';
+      sourceLink.href = article.source_url;
+    } else {
+      sourceZone.style.display = 'none';
+    }
+    document.getElementById('modal').classList.add('ouvert');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fermerModal(e) {
+    if (e && e.target !== document.getElementById('modal') && !e.target.classList.contains('modal-fermer')) return;
+    document.getElementById('modal').classList.remove('ouvert');
+    document.body.style.overflow = '';
+  }
+
+  async function charger() {
+    try {
+      const resp = await fetch(`${API}/actualites`);
+      const data = await resp.json();
+      toutesActualites = (data.actualites || data || []).sort((a, b) =>
+        new Date(b.date_publication || b.created_at) - new Date(a.date_publication || a.created_at)
+      );
+      afficher(toutesActualites);
+    } catch(e) {
+      document.getElementById('contenu').innerHTML = `
+        <div class="vide">
+          <div class="emoji">📡</div>
+          <p>Impossible de charger les actualités.</p>
+          <p style="margin-top:8px;font-size:0.85rem;">Vérifiez votre connexion et réessayez.</p>
+        </div>`;
+    }
+  }
+
+  charger();
+</script>
+</body>
+</html>
