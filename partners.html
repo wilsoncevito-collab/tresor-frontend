@@ -96,6 +96,17 @@ section{padding:3rem 1.5rem;}
 .footer-bottom{flex-direction:column;gap:1rem;text-align:center;}
 .footer-legal{text-align:center;}
 }
+
+.lic-bg{background:var(--blanc);}
+.lic-block{margin-top:3rem;}
+.lic-block h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;color:var(--vert);margin-bottom:.5rem;}
+.lic-block>p{color:var(--doux);font-weight:300;line-height:1.7;margin-bottom:1.5rem;max-width:800px;}
+.lic-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:1.2rem;background:#fff;}
+.lic-table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:640px;}
+.lic-table th{background:var(--vert);color:var(--or-c);text-align:left;padding:.9rem 1.2rem;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.lic-table td{padding:.9rem 1.2rem;border-top:1px solid var(--border);color:var(--doux);line-height:1.6;vertical-align:top;font-weight:300;}
+.lic-table td.fld{color:var(--vert);font-weight:600;width:24%;}
+.lic-table tr:nth-child(even) td{background:rgba(245,240,232,.45);}
 </style>
 </head>
 <body>
@@ -105,6 +116,7 @@ section{padding:3rem 1.5rem;}
 <a href="index.html#inventions" class="nav-link" data-i18n="nav.inventions">Inventions</a>
 <a href="index.html#publications" class="nav-link" data-i18n="nav.publications">Publications</a>
 <a href="partners.html" class="nav-link" data-i18n="nav.partners">Partners</a>
+<a href="partners.html#licensing" class="nav-link" data-i18n="nav.licensing">Licensing</a>
 </div>
 <div class="nav-auth">
 <div class="lang-switch">
@@ -158,6 +170,52 @@ section{padding:3rem 1.5rem;}
 <span class="tech-status status-available" data-i18n="tech.available">Available for Licensing</span>
 <p data-i18n="doubai.desc">An AI-powered predictive platform for maternal and infant health, using transfer learning and contextual adaptation to forecast risks and optimize referrals.</p>
 </div>
+</div>
+</div>
+</section>
+
+<section class="lic-bg" id="licensing">
+<div class="container">
+<div class="overview-intro">
+<div class="section-tag" data-i18n="lic.tag">Licensing Options</div>
+<h2 data-i18n="lic.title">Licensing by <em>field of use and region</em></h2>
+</div>
+<div class="lic-block">
+<h3 data-i18n="af.title">AudioForm: fields of use</h3>
+<p data-i18n="af.intro">AudioForm can be licensed separately in each field of use below, and within each field by region.</p>
+<div class="lic-wrap"><table class="lic-table"><thead><tr><th data-i18n="th.field">Field of use</th><th data-i18n="th.uses">Example uses</th><th data-i18n="th.lic">Typical licensees</th></tr></thead><tbody>
+<tr><td class="fld" data-i18n="af.1.f">Clinical care</td><td data-i18n="af.1.u">Patient intake, consultations across a language barrier, support for foreign-trained doctors</td><td data-i18n="af.1.l">Hospitals, electronic health record vendors, telehealth platforms</td></tr>
+<tr><td class="fld" data-i18n="af.2.f">Community and public health</td><td data-i18n="af.2.u">Health surveys, community health worker follow-up, vaccination, disease surveillance</td><td data-i18n="af.2.l">Ministries of health, data collection platforms, health NGOs</td></tr>
+<tr><td class="fld" data-i18n="af.3.f">Health insurance and social protection</td><td data-i18n="af.3.u">Enrollment in universal health coverage, claims, mutual health schemes</td><td data-i18n="af.3.l">Public health insurers, mutual schemes, health insurers</td></tr>
+<tr><td class="fld" data-i18n="af.4.f">Banking, microfinance and mobile money</td><td data-i18n="af.4.u">Account opening, identity checks (KYC), loan applications</td><td data-i18n="af.4.l">Banks, microfinance institutions, mobile money operators</td></tr>
+<tr><td class="fld" data-i18n="af.5.f">Insurance (non-health)</td><td data-i18n="af.5.u">Claims, agricultural insurance</td><td data-i18n="af.5.l">Insurers, reinsurers</td></tr>
+<tr><td class="fld" data-i18n="af.6.f">Telecommunications</td><td data-i18n="af.6.u">SIM card registration</td><td data-i18n="af.6.l">Mobile network operators</td></tr>
+<tr><td class="fld" data-i18n="af.7.f">Identity, civil registration and elections</td><td data-i18n="af.7.u">Birth registration, census, voter registration</td><td data-i18n="af.7.l">Governments, digital identity integrators</td></tr>
+<tr><td class="fld" data-i18n="af.8.f">Immigration, asylum and borders</td><td data-i18n="af.8.u">Visa and asylum applications, refugee registration</td><td data-i18n="af.8.l">Immigration authorities, consulates, refugee agencies, public IT contractors</td></tr>
+<tr><td class="fld" data-i18n="af.9.f">Justice and public safety</td><td data-i18n="af.9.u">Complaints, witness statements, legal aid</td><td data-i18n="af.9.l">Justice ministries, police, law firms, legal aid NGOs</td></tr>
+<tr><td class="fld" data-i18n="af.10.f">Government services</td><td data-i18n="af.10.u">Administrative procedures, tax, municipal services</td><td data-i18n="af.10.l">Governments, local authorities, e-government providers</td></tr>
+<tr><td class="fld" data-i18n="af.11.f">Humanitarian aid</td><td data-i18n="af.11.u">Beneficiary registration, aid distribution</td><td data-i18n="af.11.l">UN agencies, international NGOs</td></tr>
+<tr><td class="fld" data-i18n="af.12.f">Research and clinical trials</td><td data-i18n="af.12.u">Informed consent by voice, multilingual questionnaires</td><td data-i18n="af.12.l">Pharmaceutical companies, contract research organizations, survey institutes</td></tr>
+<tr><td class="fld" data-i18n="af.13.f">Agriculture</td><td data-i18n="af.13.u">Farm surveys, cooperatives, agricultural credit</td><td data-i18n="af.13.l">Agribusiness, cooperatives, development programs</td></tr>
+<tr><td class="fld" data-i18n="af.14.f">Education</td><td data-i18n="af.14.u">Enrollment, literacy programs, oral assessments</td><td data-i18n="af.14.l">Education ministries, education platforms</td></tr>
+<tr><td class="fld" data-i18n="af.15.f">Employment and human resources</td><td data-i18n="af.15.u">Recruitment, onboarding, migrant workers</td><td data-i18n="af.15.l">Employment agencies, large employers</td></tr>
+<tr><td class="fld" data-i18n="af.16.f">Accessibility</td><td data-i18n="af.16.u">People with visual impairments, older or low-literacy users</td><td data-i18n="af.16.l">Disability organizations, software vendors, public services</td></tr>
+<tr><td class="fld" data-i18n="af.17.f">Customer service</td><td data-i18n="af.17.u">Voice forms and requests by phone, contact centers</td><td data-i18n="af.17.l">Contact center operators, large companies</td></tr>
+</tbody></table></div>
+</div>
+<div class="lic-block">
+<h3 data-i18n="db.title">Doubai: licensing by region</h3>
+<p data-i18n="db.intro">Doubai addresses one field, maternal health, so it is licensed by region. Each regional license adapts the model to the women it serves.</p>
+<div class="lic-wrap"><table class="lic-table"><thead><tr><th data-i18n="th.region">Region</th><th data-i18n="th.women">Women served</th><th data-i18n="th.partners">Typical partners</th></tr></thead><tbody>
+<tr><td class="fld" data-i18n="db.1.f">West and Central Africa (francophone)</td><td data-i18n="db.1.u">Women in urban and rural areas reached by community health programs</td><td data-i18n="db.1.l">Ministries of health, national health insurance schemes, maternal health NGOs</td></tr>
+<tr><td class="fld" data-i18n="db.2.f">West Africa (anglophone)</td><td data-i18n="db.2.u">Same, in English-speaking health systems</td><td data-i18n="db.2.l">Ministries of health, maternal health programs, private health networks</td></tr>
+<tr><td class="fld" data-i18n="db.3.f">East Africa</td><td data-i18n="db.3.u">Same, with regional data and languages</td><td data-i18n="db.3.l">Ministries of health, regional health programs, foundations</td></tr>
+<tr><td class="fld" data-i18n="db.4.f">Southern Africa</td><td data-i18n="db.4.u">Same, with regional data and languages</td><td data-i18n="db.4.l">Ministries of health, private and public health systems</td></tr>
+<tr><td class="fld" data-i18n="db.5.f">North America</td><td data-i18n="db.5.u">Women of African descent and other underserved women</td><td data-i18n="db.5.l">Health systems, insurers, maternal health programs</td></tr>
+<tr><td class="fld" data-i18n="db.6.f">Europe</td><td data-i18n="db.6.u">Women of African descent and migrant women</td><td data-i18n="db.6.l">Hospitals, public health agencies</td></tr>
+<tr><td class="fld" data-i18n="db.7.f">Latin America and the Caribbean</td><td data-i18n="db.7.u">Women of African descent</td><td data-i18n="db.7.l">Ministries of health, regional health programs</td></tr>
+<tr><td class="fld" data-i18n="db.8.f">Other underserved populations</td><td data-i18n="db.8.u">Populations underrepresented in existing clinical data</td><td data-i18n="db.8.l">Health systems and programs serving them</td></tr>
+</tbody></table></div>
 </div>
 </div>
 </section>
@@ -225,7 +283,7 @@ section{padding:3rem 1.5rem;}
 <div class="section-tag" data-i18n="cta.tag">Get In Touch</div>
 <h2 data-i18n="cta.title">Ready to explore <em>partnership opportunities?</em></h2>
 <p data-i18n="cta.intro">Contact us to discuss licensing, co-development, or regional deployment partnerships. We look forward to exploring how our technologies can support your strategic objectives.</p>
-<a href="mailto:contact@tresor-health.com?subject=Partnership%20Inquiry%20-%20Tresor%20Health" class="cta-email" data-i18n="cta.button">📧 contact@tresor-health.com</a>
+<a href="mailto:wilsoncevito@tresor-health.com?subject=Partnership%20Inquiry%20-%20Tresor%20Health" class="cta-email" data-i18n="cta.button">📧 wilsoncevito@tresor-health.com</a>
 <div class="cta-info">
 <p data-i18n="cta.info"><strong>Please include in your message:</strong><br/>
 • Your organization name<br/>
@@ -240,7 +298,7 @@ section{padding:3rem 1.5rem;}
 <footer>
 <div class="footer-bottom">
 <p class="footer-copy">© 2026 Tresor Health · All rights reserved</p>
-<p class="footer-copy" data-i18n="footer.copy">© 2026 Tresor Health · All rights reserved · Afrocognis and AVH inventions are linked to the book published by Johns Hopkins University Press.</p>
+<p class="footer-legal" data-i18n="footer.legal">Afrocognis and AVH inventions are linked to the book published by Johns Hopkins University Press. AudioForm and Doubai are available for industrial licensing.</p>
 </div>
 </footer>
 
@@ -269,8 +327,96 @@ const translations = {
     "why4.title": "Technical Expertise", "why4.desc": "Experienced technical team in healthcare ICT and AI, with deep understanding of both technology and clinical workflows.",
     "cta.tag": "Get In Touch", "cta.title": "Ready to explore <em>partnership opportunities?</em>",
     "cta.intro": "Contact us to discuss licensing, co-development, or regional deployment partnerships. We look forward to exploring how our technologies can support your strategic objectives.",
-    "cta.button": "📧 contact@tresor-health.com",
+    "cta.button": "📧 wilsoncevito@tresor-health.com",
     "cta.info": "<strong>Please include in your message:</strong><br/>• Your organization name<br/>• Industry sector<br/>• Type of partnership envisioned (licensing, co-development, deployment)<br/>• Target geographic region",
+        "lic.tag": "Licensing Options",
+    "lic.title": "Licensing by <em>field of use and region</em>",
+    "af.title": "AudioForm: fields of use",
+    "af.intro": "AudioForm can be licensed separately in each field of use below, and within each field by region.",
+    "db.title": "Doubai: licensing by region",
+    "db.intro": "Doubai addresses one field, maternal health, so it is licensed by region. Each regional license adapts the model to the women it serves.",
+    "th.field": "Field of use",
+    "th.uses": "Example uses",
+    "th.lic": "Typical licensees",
+    "th.region": "Region",
+    "th.women": "Women served",
+    "th.partners": "Typical partners",
+    "nav.licensing": "Licensing",
+    "af.1.f": "Clinical care",
+    "af.1.u": "Patient intake, consultations across a language barrier, support for foreign-trained doctors",
+    "af.1.l": "Hospitals, electronic health record vendors, telehealth platforms",
+    "af.2.f": "Community and public health",
+    "af.2.u": "Health surveys, community health worker follow-up, vaccination, disease surveillance",
+    "af.2.l": "Ministries of health, data collection platforms, health NGOs",
+    "af.3.f": "Health insurance and social protection",
+    "af.3.u": "Enrollment in universal health coverage, claims, mutual health schemes",
+    "af.3.l": "Public health insurers, mutual schemes, health insurers",
+    "af.4.f": "Banking, microfinance and mobile money",
+    "af.4.u": "Account opening, identity checks (KYC), loan applications",
+    "af.4.l": "Banks, microfinance institutions, mobile money operators",
+    "af.5.f": "Insurance (non-health)",
+    "af.5.u": "Claims, agricultural insurance",
+    "af.5.l": "Insurers, reinsurers",
+    "af.6.f": "Telecommunications",
+    "af.6.u": "SIM card registration",
+    "af.6.l": "Mobile network operators",
+    "af.7.f": "Identity, civil registration and elections",
+    "af.7.u": "Birth registration, census, voter registration",
+    "af.7.l": "Governments, digital identity integrators",
+    "af.8.f": "Immigration, asylum and borders",
+    "af.8.u": "Visa and asylum applications, refugee registration",
+    "af.8.l": "Immigration authorities, consulates, refugee agencies, public IT contractors",
+    "af.9.f": "Justice and public safety",
+    "af.9.u": "Complaints, witness statements, legal aid",
+    "af.9.l": "Justice ministries, police, law firms, legal aid NGOs",
+    "af.10.f": "Government services",
+    "af.10.u": "Administrative procedures, tax, municipal services",
+    "af.10.l": "Governments, local authorities, e-government providers",
+    "af.11.f": "Humanitarian aid",
+    "af.11.u": "Beneficiary registration, aid distribution",
+    "af.11.l": "UN agencies, international NGOs",
+    "af.12.f": "Research and clinical trials",
+    "af.12.u": "Informed consent by voice, multilingual questionnaires",
+    "af.12.l": "Pharmaceutical companies, contract research organizations, survey institutes",
+    "af.13.f": "Agriculture",
+    "af.13.u": "Farm surveys, cooperatives, agricultural credit",
+    "af.13.l": "Agribusiness, cooperatives, development programs",
+    "af.14.f": "Education",
+    "af.14.u": "Enrollment, literacy programs, oral assessments",
+    "af.14.l": "Education ministries, education platforms",
+    "af.15.f": "Employment and human resources",
+    "af.15.u": "Recruitment, onboarding, migrant workers",
+    "af.15.l": "Employment agencies, large employers",
+    "af.16.f": "Accessibility",
+    "af.16.u": "People with visual impairments, older or low-literacy users",
+    "af.16.l": "Disability organizations, software vendors, public services",
+    "af.17.f": "Customer service",
+    "af.17.u": "Voice forms and requests by phone, contact centers",
+    "af.17.l": "Contact center operators, large companies",
+    "db.1.f": "West and Central Africa (francophone)",
+    "db.1.u": "Women in urban and rural areas reached by community health programs",
+    "db.1.l": "Ministries of health, national health insurance schemes, maternal health NGOs",
+    "db.2.f": "West Africa (anglophone)",
+    "db.2.u": "Same, in English-speaking health systems",
+    "db.2.l": "Ministries of health, maternal health programs, private health networks",
+    "db.3.f": "East Africa",
+    "db.3.u": "Same, with regional data and languages",
+    "db.3.l": "Ministries of health, regional health programs, foundations",
+    "db.4.f": "Southern Africa",
+    "db.4.u": "Same, with regional data and languages",
+    "db.4.l": "Ministries of health, private and public health systems",
+    "db.5.f": "North America",
+    "db.5.u": "Women of African descent and other underserved women",
+    "db.5.l": "Health systems, insurers, maternal health programs",
+    "db.6.f": "Europe",
+    "db.6.u": "Women of African descent and migrant women",
+    "db.6.l": "Hospitals, public health agencies",
+    "db.7.f": "Latin America and the Caribbean",
+    "db.7.u": "Women of African descent",
+    "db.7.l": "Ministries of health, regional health programs",
+    "db.8.f": "Other underserved populations",
+    "db.8.u": "Populations underrepresented in existing clinical data",
+    "db.8.l": "Health systems and programs serving them",
     "footer.legal": "Afrocognis and AVH inventions are linked to the book published by Johns Hopkins University Press. AudioForm and Doubai are available for industrial licensing."
   },
   fr: {
@@ -296,8 +442,96 @@ const translations = {
     "why4.title": "Expertise Technique", "why4.desc": "Équipe technique expérimentée en ICT et IA médicale, avec une compréhension approfondie de la technologie et des workflows cliniques.",
     "cta.tag": "Contactez-Nous", "cta.title": "Prêt à explorer <em>les opportunités de partenariat ?</em>",
     "cta.intro": "Contactez-nous pour discuter de licensing, de co-développement ou de partenariats de déploiement régional. Nous sommes impatients d'explorer comment nos technologies peuvent soutenir vos objectifs stratégiques.",
-    "cta.button": "📧 contact@tresor-health.com",
+    "cta.button": "📧 wilsoncevito@tresor-health.com",
     "cta.info": "<strong>Merci d'inclure dans votre message :</strong><br/>• Nom de votre organisation<br/>• Secteur d'activité<br/>• Type de partenariat envisagé (licensing, co-développement, déploiement)<br/>• Région géographique ciblée",
+        "lic.tag": "Options de Licence",
+    "lic.title": "Licences par <em>domaine d'usage et par région</em>",
+    "af.title": "AudioForm : domaines d'usage",
+    "af.intro": "AudioForm peut être licencié séparément dans chacun des domaines d'usage ci-dessous, et dans chaque domaine par région.",
+    "db.title": "Doubai : licences par région",
+    "db.intro": "Doubai couvre un seul domaine, la santé maternelle, et est donc licencié par région. Chaque licence régionale adapte le modèle aux femmes qu'elle dessert.",
+    "th.field": "Domaine d'usage",
+    "th.uses": "Exemples d'usage",
+    "th.lic": "Licenciés types",
+    "th.region": "Région",
+    "th.women": "Femmes concernées",
+    "th.partners": "Partenaires types",
+    "nav.licensing": "Licences",
+    "af.1.f": "Soins cliniques",
+    "af.1.u": "Accueil des patients, consultations malgré la barrière linguistique, soutien aux médecins formés à l'étranger",
+    "af.1.l": "Hôpitaux, éditeurs de dossiers médicaux électroniques, plateformes de télésanté",
+    "af.2.f": "Santé communautaire et publique",
+    "af.2.u": "Enquêtes de santé, suivi par les agents de santé communautaires, vaccination, surveillance des maladies",
+    "af.2.l": "Ministères de la santé, plateformes de collecte de données, ONG de santé",
+    "af.3.f": "Assurance maladie et protection sociale",
+    "af.3.u": "Inscription à la couverture santé universelle, remboursements, mutuelles de santé",
+    "af.3.l": "Assureurs santé publics, mutuelles, assureurs santé",
+    "af.4.f": "Banque, microfinance et mobile money",
+    "af.4.u": "Ouverture de compte, vérification d'identité (KYC), demandes de prêt",
+    "af.4.l": "Banques, institutions de microfinance, opérateurs de mobile money",
+    "af.5.f": "Assurance (hors santé)",
+    "af.5.u": "Déclaration de sinistres, assurance agricole",
+    "af.5.l": "Assureurs, réassureurs",
+    "af.6.f": "Télécommunications",
+    "af.6.u": "Enregistrement des cartes SIM",
+    "af.6.l": "Opérateurs de réseaux mobiles",
+    "af.7.f": "Identité, état civil et élections",
+    "af.7.u": "Déclaration de naissance, recensement, inscription sur les listes électorales",
+    "af.7.l": "Gouvernements, intégrateurs d'identité numérique",
+    "af.8.f": "Immigration, asile et frontières",
+    "af.8.u": "Demandes de visa et d'asile, enregistrement des réfugiés",
+    "af.8.l": "Autorités d'immigration, consulats, agences pour les réfugiés, prestataires informatiques publics",
+    "af.9.f": "Justice et sécurité publique",
+    "af.9.u": "Plaintes, témoignages, aide juridique",
+    "af.9.l": "Ministères de la justice, police, cabinets d'avocats, ONG d'aide juridique",
+    "af.10.f": "Services publics",
+    "af.10.u": "Démarches administratives, impôts, services municipaux",
+    "af.10.l": "Gouvernements, collectivités locales, fournisseurs d'administration en ligne",
+    "af.11.f": "Aide humanitaire",
+    "af.11.u": "Enregistrement des bénéficiaires, distribution de l'aide",
+    "af.11.l": "Agences des Nations Unies, ONG internationales",
+    "af.12.f": "Recherche et essais cliniques",
+    "af.12.u": "Consentement éclairé par la voix, questionnaires multilingues",
+    "af.12.l": "Laboratoires pharmaceutiques, organisations de recherche sous contrat, instituts d'enquête",
+    "af.13.f": "Agriculture",
+    "af.13.u": "Enquêtes agricoles, coopératives, crédit agricole",
+    "af.13.l": "Agro-industrie, coopératives, programmes de développement",
+    "af.14.f": "Éducation",
+    "af.14.u": "Inscriptions, programmes d'alphabétisation, évaluations orales",
+    "af.14.l": "Ministères de l'éducation, plateformes éducatives",
+    "af.15.f": "Emploi et ressources humaines",
+    "af.15.u": "Recrutement, intégration, travailleurs migrants",
+    "af.15.l": "Agences pour l'emploi, grands employeurs",
+    "af.16.f": "Accessibilité",
+    "af.16.u": "Personnes malvoyantes, personnes âgées ou peu alphabétisées",
+    "af.16.l": "Organisations de personnes handicapées, éditeurs de logiciels, services publics",
+    "af.17.f": "Service client",
+    "af.17.u": "Formulaires et demandes vocaux par téléphone, centres de contact",
+    "af.17.l": "Opérateurs de centres de contact, grandes entreprises",
+    "db.1.f": "Afrique de l'Ouest et centrale (francophone)",
+    "db.1.u": "Femmes des zones urbaines et rurales touchées par les programmes de santé communautaire",
+    "db.1.l": "Ministères de la santé, régimes nationaux d'assurance maladie, ONG de santé maternelle",
+    "db.2.f": "Afrique de l'Ouest (anglophone)",
+    "db.2.u": "Idem, dans les systèmes de santé anglophones",
+    "db.2.l": "Ministères de la santé, programmes de santé maternelle, réseaux de santé privés",
+    "db.3.f": "Afrique de l'Est",
+    "db.3.u": "Idem, avec données et langues régionales",
+    "db.3.l": "Ministères de la santé, programmes de santé régionaux, fondations",
+    "db.4.f": "Afrique australe",
+    "db.4.u": "Idem, avec données et langues régionales",
+    "db.4.l": "Ministères de la santé, systèmes de santé publics et privés",
+    "db.5.f": "Amérique du Nord",
+    "db.5.u": "Femmes d'ascendance africaine et autres femmes mal desservies",
+    "db.5.l": "Systèmes de santé, assureurs, programmes de santé maternelle",
+    "db.6.f": "Europe",
+    "db.6.u": "Femmes d'ascendance africaine et femmes migrantes",
+    "db.6.l": "Hôpitaux, agences de santé publique",
+    "db.7.f": "Amérique latine et Caraïbes",
+    "db.7.u": "Femmes d'ascendance africaine",
+    "db.7.l": "Ministères de la santé, programmes de santé régionaux",
+    "db.8.f": "Autres populations mal desservies",
+    "db.8.u": "Populations sous-représentées dans les données cliniques existantes",
+    "db.8.l": "Systèmes et programmes de santé qui les desservent",
     "footer.legal": "Les inventions Afrocognis et AVH sont liées à l'ouvrage publié par Johns Hopkins University Press. AudioForm et Doubai sont disponibles pour le licensing industriel."
   }
 };
